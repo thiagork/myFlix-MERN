@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Documentation - My REST API using Node.js</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css">
+    <script src="main.js"></script>
+</head>
+<body>
+    <header>
+        <h1 class="intro">A RESTful API using Node.js by Thiago Krüger</h1>
+        <h2>Documentation</h2>
+    </header>
+     <table border="1" style="width:100%"> <!-- I will remove the border attribute when I create a css file for the project -->
+        <tr>
+            <td><b>Endpoint</b></td>
+            <td><b>Type</b></td>
+            <td><b>Description</b></td>
+            <td><b>Expected data format</b></td>
+        </tr>
+        <tr>
+            <td>/users</td>
+            <td>POST</td>
+            <td>Allow new users to register</td>
+            <td>
+                JSON<br>
+                {Username: "Username",<br>
+                Password: "Password",<br>
+                Email: "Email",<br>
+                Birthday: "Birthday"}
+            </td>
+        </tr>
+        <tr>
+            <td>/users/:Username</td>
+            <td>DELETE</td>
+            <td>Deletes a user by username</td>
+            <td>N/A</td>
+        </tr>
+        <tr>
+            <td>/users</td>
+            <td>GET</td>
+            <td>Get all users</td>
+            <td>N/A</td>
+        </tr>
+        <tr>
+            <td>/users/:Username</td>
+            <td>GET</td>
+            <td>Get a user by username</td>
+            <td>N/A</td>
+        </tr>
+        <tr>
+            <td>/users/:Username</td>
+            <td>PUT</td>
+            <td>Update user data</td>
+            <td>
+                JSON<br>
+                {Username: "New username",<br>
+                Password: "New password",<br>
+                Email: "New email"}
+            </td>
+        </tr>
+        <tr>
+            <td>/users/:Username/movies/:MovieID</td>
+            <td>POST</td>
+            <td>Adds a movie to a user's list of favorites</td>
+            <td>N/A</td>
+        </tr>
+        <tr>
+            <td>/users/:Username/movies/:MovieID</td>
+            <td>DELETE</td>
+            <td>Removes a movie from a user's list of favorites</td>
+            <td>N/A</td>
+        </tr>
+        <tr>
+            <td>/movies</td>
+            <td>GET</td>
+            <td>Get all movies</td>
+            <td>N/A</td>
+        </tr>
+        <tr>
+            <td>/movies/:Title</td>
+            <td>GET</td>
+            <td>Get a movie by title</td>
+            <td>N/A</td>
+        </tr>       
+        <tr>
+            <td>/genres/:Genre</td>
+            <td>GET</td>
+            <td>Get a genre by name</td>
+            <td>N/A</td>
+        </tr>  
+        <tr>
+            <td>/directors/:Director</td>
+            <td>GET</td>
+            <td>Get a director by name</td>
+            <td>N/A</td>
+        </tr>  
+        <tr>
+            <td>/documentation</td>
+            <td>GET</td>
+            <td>Serves this documentation file being currently viewed</td>
+            <td>N/A</td>
+        </tr>      
+    </table>
+    
+</body>
+</html>
