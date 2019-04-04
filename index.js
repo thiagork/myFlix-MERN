@@ -8,6 +8,9 @@ const uuid = require('uuid');
 const Models = require('./model.js');
 const movies = Models.movies;
 const users = Models.users;
+const cors = require('cors');
+const validator = require('express-validator');
+const allowedOrigins = ['http://localhost:8080'];
 const app = express();
 
 mongoose.connect('mongodb://localhost:27017/myDB', {useNewUrlParser: true});
@@ -16,9 +19,34 @@ app.use(bodyParser.json());
 const auth = require('./auth.js')(app);
 const passport = require('passport');
 require('./passport.js');
+app.use(cors({
+    origin: (origin, callback) => {
+        if (!origin) {
+            return callback(null, true);
+        }
+        if (allowedOrigins.indexOf(origin) === -1) {
+            const message = 'The CORS policy for this application doesn\'t allow access from from origin ' + origin;
+            return callback(new Error(message), false);
+        }
+        return callback(null, true);
+    }
+}));
+app.use(validator());
 
 // Allow new users to register
-app.post('/users', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.post('/users', (req, res) => {
+    req.checkBody('Username', 'Username is required.').notEmpty();
+    req.checkBody('Username', 'Username contains non alphanumeric characters: Not allowed.').isAlphanumeric();
+    req.checkBody('Password', 'Password is required.').notEmpty();
+    req.checkBody('Email', 'Email is required.').notEmpty();
+    req.checkBody('Email', 'Email does not appear to be valid.').isEmail();
+    
+    const errors = req.validationErrors();
+    if (errors) {
+        return res.status(422).json({errors: errors});
+    }
+
+    const hashedPassword = users.hashPassword(req.body.password);
     users.findOne({Username: req.body.Username})
     .then(user => {
         if (user) {
@@ -26,7 +54,7 @@ app.post('/users', passport.authenticate('jwt', {session: false}), (req, res) =>
         } else {
             users.create({
                 Username: req.body.Username,
-                Password: req.body.Password,
+                Password: hashedPassword,
                 Email: req.body.Email,
                 Birthday: req.body.Birthday
             })
@@ -34,7 +62,7 @@ app.post('/users', passport.authenticate('jwt', {session: false}), (req, res) =>
             .catch(error => {
                 console.error(error);
                 res.status(500).send('Error: ' + error);
-            })
+            });
         }
     }).catch(error => {
         console.error(error);
@@ -194,7 +222,9 @@ app.get('/documentation', passport.authenticate('jwt', {session: false}), (req, 
     res.sendFile('/public/documentation.html', { root: __dirname })
 });
 
-app.listen(8080, () => {
-    console.log('Your app is listening on port 8080.');
-});
-
+{
+    const port = process.env.PORT || 3000;
+    app.listen(port, '0.0.0.0', () => {
+        console.log(`Your app is listening on port ${port}.`);
+    });
+}
