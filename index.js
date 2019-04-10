@@ -4,33 +4,35 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
-const uuid = require('uuid');
 const Models = require('./model.js');
 const movies = Models.movies;
 const users = Models.users;
 const cors = require('cors');
 const validator = require('express-validator');
-const allowedOrigins = ['http://localhost:8080'];
+// const allowedOrigins = ['0.0.0.0'];
 const app = express();
 
-mongoose.connect('mongodb+srv://myDBadmin:kjKvJtbez300AzPh@mydb-k6cpb.mongodb.net/test?retryWrites=true', {useNewUrlParser: true});
+// mongoose.connect('mongodb+srv://myDBadmin:kjKvJtbez300AzPh@mydb-k6cpb.mongodb.net/test?retryWrites=true', {useNewUrlParser: true});
+mongoose.connect('mongodb://localhost:27017/myDB', {useNewUrlParser: true});
 
 app.use(bodyParser.json());
 const auth = require('./auth.js')(app);
 const passport = require('passport');
 require('./passport.js');
-app.use(cors({
-    origin: (origin, callback) => {
-        if (!origin) {
-            return callback(null, true);
-        }
-        if (allowedOrigins.indexOf(origin) === -1) {
-            const message = 'The CORS policy for this application doesn\'t allow access from from origin ' + origin;
-            return callback(new Error(message), false);
-        }
-        return callback(null, true);
-    }
-}));
+app.use(cors()); // CORS-enabled for all origins
+
+// app.use(cors({
+//     origin: (origin, callback) => {
+//         if (!origin) {
+//             return callback(null, true);
+//         }
+//         if (allowedOrigins.indexOf(origin) === -1) {
+//             const message = 'The CORS policy for this application doesn\'t allow access from from origin ' + origin;
+//             return callback(new Error(message), false);
+//         }
+//         return callback(null, true);
+//     }
+// }));
 app.use(validator());
 
 // Allow new users to register
@@ -46,7 +48,7 @@ app.post('/users', (req, res) => {
         return res.status(422).json({errors: errors});
     }
 
-    const hashedPassword = users.hashPassword(req.body.password);
+    const hashedPassword = users.hashPassword(req.body.Password);
     users.findOne({Username: req.body.Username})
     .then(user => {
         if (user) {
