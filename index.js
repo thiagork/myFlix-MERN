@@ -11,8 +11,9 @@ const cors = require('cors');
 const validator = require('express-validator');
 const app = express();
 
-// mongoose.connect('mongodb+srv://myDBadmin:<password>@mydb-k6cpb.mongodb.net/test?retryWrites=true', {useNewUrlParser: true});
-mongoose.connect('mongodb://localhost:27017/myDB', {useNewUrlParser: true});
+
+mongoose.connect('mongodb+srv://myDBadmin:kjKvJtbez300AzPh@mydb-k6cpb.mongodb.net/myDB?retryWrites=true', {useNewUrlParser: true});
+// mongoose.connect('mongodb://localhost:27017/myDB', {useNewUrlParser: true});
 
 app.use(bodyParser.json());
 const auth = require('./auth.js')(app);
