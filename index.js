@@ -12,7 +12,7 @@ const validator = require('express-validator');
 const app = express();
 
 
-mongoose.connect('mongodb+srv://myDBadmin:kjKvJtbez300AzPh@mydb-k6cpb.mongodb.net/myDB?retryWrites=true', {useNewUrlParser: true});
+mongoose.connect('mongodb+srv://myDBadmin:<password>@mydb-k6cpb.mongodb.net/myDB?retryWrites=true', {useNewUrlParser: true});
 // mongoose.connect('mongodb://localhost:27017/myDB', {useNewUrlParser: true});
 
 app.use(bodyParser.json());
@@ -225,7 +225,7 @@ app.get('/directors/:Director', passport.authenticate('jwt', {session: false}), 
 });
 
 // Serves documentation file
-app.get('/documentation', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.get('/documentation', (req, res) => {
     res.sendFile('/public/documentation.html', { root: __dirname })
 });
 
