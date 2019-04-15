@@ -11,9 +11,7 @@ const cors = require('cors');
 const validator = require('express-validator');
 const app = express();
 
-
-mongoose.connect('mongodb+srv://myDBadmin:kjKvJtbez300AzPh@mydb-k6cpb.mongodb.net/myDB?retryWrites=true', {useNewUrlParser: true});
-// mongoose.connect('mongodb://localhost:27017/myDB', {useNewUrlParser: true});
+mongoose.connect(process.env.DB_ADDRESS, {useNewUrlParser: true});
 
 app.use(bodyParser.json());
 const auth = require('./auth.js')(app);
@@ -230,7 +228,7 @@ app.get('/documentation', (req, res) => {
 });
 
 {
-    const port = process.env.PORT || 3000;
+    const port = process.env.APP_PORT || 3000;
     app.listen(port, '0.0.0.0', () => {
         console.log(`Your app is listening on port ${port}.`);
     });
