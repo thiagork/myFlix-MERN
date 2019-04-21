@@ -14,7 +14,7 @@ export class MainView extends React.Component {
         };
 
         // Saves the initial state for resetting the view later
-        this.resetMainView = this.resetMainView.bind(this);
+        this.ResetMainView = this.ResetMainView.bind(this);
     }
 
 
@@ -31,14 +31,14 @@ export class MainView extends React.Component {
     }
     
 
-    onMovieClick(movie) {
+    OnMovieClick(movie) {
         this.setState({
             selectedMovie: movie
         });
     }
 
 
-    resetMainView() {
+    ResetMainView() {
         this.setState({
             selectedMovie: null
         });
@@ -53,10 +53,10 @@ export class MainView extends React.Component {
         return (
             <div className='main-view'>
                 {selectedMovie 
-                    ? <MovieView movie={selectedMovie} resetCallback={this.resetMainView}/>
+                    ? <MovieView movie={selectedMovie} ResetCallback={this.ResetMainView}/>
                     : movies.map(movie => {
                         return (
-                            <MovieCard key={movie._id} movie={movie} onClick={movie => this.onMovieClick(movie)} />
+                            <MovieCard key={movie._id} movie={movie} onClick={movie => this.OnMovieClick(movie)} />
                         )
                     })
                 }

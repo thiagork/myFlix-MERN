@@ -9,7 +9,7 @@ export class MovieView extends React.Component {
     }
 
     render() {
-        const { movie, resetCallback } = this.props;
+        const { movie, ResetCallback } = this.props;
 
         if (!movie) return null;
 
@@ -32,7 +32,7 @@ export class MovieView extends React.Component {
                     <div className='value'>{ movie.Director.Name }</div>
                 </div>
                 <div className='return-button'>
-                    <button id='return-button__movie-view' onClick={()=> {resetCallback()}}>Return</button>
+                    <button id='return-button__movie-view' onClick={()=> {ResetCallback()}}>Return</button>
                 </div>
             </div>
         );
