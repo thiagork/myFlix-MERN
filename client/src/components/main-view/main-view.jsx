@@ -13,8 +13,6 @@ export class MainView extends React.Component {
             selectedMovie: null
         };
 
-        // Saves the initial state for resetting the view later
-        this.ResetMainView = this.ResetMainView.bind(this);
     }
 
 
