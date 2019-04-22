@@ -9,30 +9,29 @@ export class MovieView extends React.Component {
     }
 
     render() {
-        const { movie, ResetCallback } = this.props;
 
-        if (!movie) return null;
+        if (!this.props.movie) return null;
 
         return (
             <div className='movie-view'>
                 <div className='movie-title'>
                     <div className='label'>Title</div>
-                    <div className='value'>{ movie.Title }</div>
+                    <div className='value'>{ this.props.movie.Title }</div>
                 </div>
                 <div className='movie-description'>
                     <div className='label'>Description</div>
-                    <div className='value'>{ movie.Description }</div>
+                    <div className='value'>{ this.props.movie.Description }</div>
                 </div>
                 <div className='movie-genre'>
                     <div className='label'>Genre</div>
-                    <div className='value'>{ movie.Genre.Name }</div>
+                    <div className='value'>{ this.props.movie.Genre.Name }</div>
                 </div>
                 <div className='movie-director'>
                     <div className='label'>Director</div>
-                    <div className='value'>{ movie.Director.Name }</div>
+                    <div className='value'>{ this.props.movie.Director.Name }</div>
                 </div>
                 <div className='return-button'>
-                    <button id='return-button__movie-view' onClick={()=> {ResetCallback()}}>Return</button>
+                    <button id='return-button__movie-view' onClick={()=> this.props.returnCallback()}>Return</button>
                 </div>
             </div>
         );
