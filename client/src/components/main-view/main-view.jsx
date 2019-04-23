@@ -1,8 +1,10 @@
 /* eslint-disable no-console */
 import React from 'react';
 import axios from 'axios';
+import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
+import { RegistrationView } from '../registration-view/registration-view';
 
 export class MainView extends React.Component {
     constructor(props){
@@ -10,7 +12,9 @@ export class MainView extends React.Component {
 
         this.state = {
             movies: null,
-            selectedMovie: null
+            selectedMovie: null,
+            user: null,
+            newUser: null
         };
     }
 
@@ -41,16 +45,39 @@ export class MainView extends React.Component {
         });
     }
 
+    OnLoggedIn(user) {
+        this.setState({
+            user
+        });
+    }
+
+    RegisterUser() {
+        this.setState({
+            newUser: true
+        });
+    }
+
+    UserRegistered() {
+        this.setState({
+            newUser: null
+        });
+    }
+
 
     render() {
-        const { movies, selectedMovie } = this.state;
+        const { movies, selectedMovie, user, newUser } = this.state;
+
+        if (!user) {
+            if (newUser) return <RegistrationView UserRegistered={() => this.UserRegistered()} OnLoggedIn={user => this.OnLoggedIn(user)} />;
+            else return <LoginView OnLoggedIn={user => this.OnLoggedIn(user)} newUser={()=> this.RegisterUser()} />;
+        }
 
         if (!movies) return <div className='main-view' />;
 
         return (
             <div className='main-view'>
                 {selectedMovie 
-                    ? <MovieView returnCallback={()=> this.ResetMainView()} movie={selectedMovie} />
+                    ? <MovieView returnCallback={() => this.ResetMainView()} movie={selectedMovie} />
                     : movies.map(movie => {
                         return (
                             <MovieCard key={movie._id} movie={movie} onClick={movie => this.OnMovieClick(movie)} />
