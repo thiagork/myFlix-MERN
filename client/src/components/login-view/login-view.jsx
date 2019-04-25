@@ -1,6 +1,10 @@
 /* eslint-disable no-console */
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+
 
 export function LoginView(props) {
     const [username, setUsername] = useState('');
@@ -14,18 +18,35 @@ export function LoginView(props) {
 
 
     return (
-        <form>
-            <label>
-                Username:
-                <input type="text" value={username} onChange={e => setUsername(e.target.value)} />
-            </label>
-            <label>
-                Password:
-                <input value={password} onChange={e => setPassword(e.target.value)} />
-            </label>
-            <button type='button' onClick={handleSubmit}>Submit</button>
-            <button type='button' onClick={()=>props.newUser()}>New user?</button>
-        </form>
+        <Container style={{ width: '18rem' }}>
+        <h1>Login</h1>
+            <Form>
+                <Form.Group controlId='formUsername'>
+                    <Form.Label>Username:</Form.Label>
+                    <Form.Control size='sm' type='text' placeholder='Username' value={username} onChange={e => setUsername(e.target.value)} />
+                </Form.Group>
+                <Form.Group controlId='formPassword'>
+                    <Form.Label>Password:</Form.Label>
+                    <Form.Control size='sm' type='password' placeholder='Password' value={password} onChange={e => setPassword(e.target.value)} />
+                </Form.Group>
+                <Button variant='primary' onClick={handleSubmit} >Submit</Button>
+                <Form.Group controlId='formNewUser'>
+                    <Form.Text>New user? Click <Button style={{ padding: 0 }}variant='link' onClick={() => props.newUser()}> here </Button> to register</Form.Text>
+                </Form.Group>
+            </Form>
+        </Container>
+
+        // <label>
+        //     Username:
+        //         <input type="text" value={username} onChange={e => setUsername(e.target.value)} />
+        // </label>
+        // <label>
+        //     Password:
+        //         <input value={password} onChange={e => setPassword(e.target.value)} />
+        // </label>
+        // <button type='button' onClick={handleSubmit}>Submit</button>
+        // <button type='button' onClick={() => props.newUser()}>New user?</button>
+
     );
 }
 

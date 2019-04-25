@@ -11,7 +11,8 @@ const cors = require('cors');
 const validator = require('express-validator');
 const app = express();
 
-mongoose.connect(process.env.DB_ADDRESS, {useNewUrlParser: true});
+mongoose.connect(`mongodb+srv://myDBadmin:kjKvJtbez300AzPh@mydb-k6cpb.mongodb.net/myDB?retryWrites=true`, {useNewUrlParser: true});
+// mongoose.connect(process.env.DB_ADDRESS, {useNewUrlParser: true});
 
 app.use(bodyParser.json());
 const auth = require('./auth.js')(app);
@@ -136,6 +137,42 @@ app.put('/users/:Username', passport.authenticate('jwt', {session: false}), (req
     });
 });
 
+// Update movie data
+app.put('/movies/:Id', passport.authenticate('jwt', {session: false}), (req, res) => {
+    
+    const errors = req.validationErrors();
+    if (errors) {
+        return res.status(422).json({errors: errors});
+    }
+
+    movies.findOneAndUpdate({_id: req.params.Id}, {
+        $set: {
+            Genre: {
+                Name: req.body.Genre.Name,
+                Description: req.body.Genre.Description
+            },
+            Director: {
+                Name: req.body.Director.Name,
+                Bio: req.body.Director.Bio
+            },
+            Actors: req.body.Actors,
+            _id: req.body._id,
+            Title: req.body.Title,
+            Description: req.body.Description,
+            ImagePath: req.body.ImagePath,
+            Featured: req.body.Featured
+        }
+    },
+    {new: true}
+    )
+    .then(updatedMovie => {
+        res.json(updatedMovie);
+    })
+    .catch(err => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    });
+});
 
 // Adds a movie to a user's favorite list
 app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', {session: false}), (req, res) => {

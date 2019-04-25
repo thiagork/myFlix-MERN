@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+// eslint-disable-next-line no-unused-vars
 import { MainView } from './components/main-view/main-view';
 import './index.scss'; // to add it to the bundle
 
