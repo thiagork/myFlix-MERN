@@ -1,9 +1,10 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
-// eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import './registration-view.scss';
 
 export function RegistrationView(props) {
     const [username, setUsername] = useState('');
@@ -38,6 +39,9 @@ export function RegistrationView(props) {
                     <Form.Control size='sm' type='date' placeholder='MM/DD/YYYY' value={birthday} onChange={e => setBirthday(e.target.value)} />
                 </Form.Group>
                 <Button variant='primary' onClick={SuccessfulRegistration}>Register</Button>
+                <Form.Group controlId='formNewUser'>
+                    <Form.Text>Already registered? Click <Button style={{ padding: 0 }} variant='link' onClick={() => props.UserRegistered()}> here </Button> to login</Form.Text>
+                </Form.Group>
             </Form>
         </Container>
     );

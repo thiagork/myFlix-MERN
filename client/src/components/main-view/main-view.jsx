@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import React from 'react';
 import axios from 'axios';
@@ -5,9 +6,13 @@ import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { RegistrationView } from '../registration-view/registration-view';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import './main-view.scss';
 
 export class MainView extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -21,16 +26,16 @@ export class MainView extends React.Component {
 
     componentDidMount() {
         axios.get('https://myflix-mern.herokuapp.com/movies')
-        .then(response => {
-            this.setState({
-                movies: response.data
+            .then(response => {
+                this.setState({
+                    movies: response.data
+                });
+            })
+            .catch(error => {
+                console.log(error);
             });
-        })
-        .catch(error => {
-            console.log(error);
-        });
     }
-    
+
 
     OnMovieClick(movie) {
         this.setState({
@@ -69,22 +74,25 @@ export class MainView extends React.Component {
 
         if (!user) {
             if (newUser) return <RegistrationView UserRegistered={() => this.UserRegistered()} OnLoggedIn={user => this.OnLoggedIn(user)} />;
-            else return <LoginView OnLoggedIn={user => this.OnLoggedIn(user)} newUser={()=> this.RegisterUser()} />;
+            else return <LoginView OnLoggedIn={user => this.OnLoggedIn(user)} NewUser={() => this.RegisterUser()} UserRegistered={() => this.UserRegistered()} />;
         }
 
         if (!movies) return <div className='main-view' />;
 
         return (
-            <div className='main-view'>
-                {selectedMovie 
-                    ? <MovieView returnCallback={() => this.ResetMainView()} movie={selectedMovie} />
-                    : movies.map(movie => {
-                        return (
-                            <MovieCard key={movie._id} movie={movie} onClick={movie => this.OnMovieClick(movie)} />
-                        )
-                    })
-                }
-            </div>
+
+            <Container className='main-view' fluid='true'>
+                <Row>
+                    {selectedMovie
+                        ? <MovieView returnCallback={() => this.ResetMainView()} movie={selectedMovie} />
+                        : movies.map(movie => {
+                            return (
+                                <Col sm={6} md={3}><MovieCard key={movie._id} movie={movie} onClick={movie => this.OnMovieClick(movie)} /></Col>
+                            )
+                        })
+                    }
+                </Row>
+            </Container>
         );
     }
 }
