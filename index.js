@@ -11,8 +11,7 @@ const cors = require('cors');
 const validator = require('express-validator');
 const app = express();
 
-mongoose.connect(`mongodb+srv://myDBadmin:kjKvJtbez300AzPh@mydb-k6cpb.mongodb.net/myDB?retryWrites=true`, {useNewUrlParser: true});
-// mongoose.connect(process.env.DB_ADDRESS, {useNewUrlParser: true});
+mongoose.connect(process.env.DB_ADDRESS, {useNewUrlParser: true});
 
 app.use(bodyParser.json());
 const auth = require('./auth.js')(app);
