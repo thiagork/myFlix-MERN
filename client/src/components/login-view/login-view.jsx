@@ -18,7 +18,7 @@ export function LoginView(props) {
 
 
     return (
-        <Container style={{ width: '18rem' }}>
+        <Container className='login-view'>
         <h1>Login</h1>
             <Form>
                 <Form.Group controlId='formUsername'>
@@ -31,7 +31,7 @@ export function LoginView(props) {
                 </Form.Group>
                 <Button variant='primary' onClick={handleSubmit} >Submit</Button>
                 <Form.Group controlId='formNewUser'>
-                    <Form.Text>New user? Click <Button style={{ padding: 0 }} variant='link' onClick={() => props.NewUser()}> here </Button> to register</Form.Text>
+                    <Form.Text>New user? Click <Button id='login-view__register' style={{ padding: 0 }} variant='link' onClick={() => props.NewUser()}> here </Button> to register</Form.Text>
                 </Form.Group>
             </Form>
         </Container>

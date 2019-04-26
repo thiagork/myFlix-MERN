@@ -84,10 +84,10 @@ export class MainView extends React.Component {
             <Container className='main-view' fluid='true'>
                 <Row>
                     {selectedMovie
-                        ? <MovieView returnCallback={() => this.ResetMainView()} movie={selectedMovie} />
+                        ? <Col><MovieView returnCallback={() => this.ResetMainView()} movie={selectedMovie} /></Col>
                         : movies.map(movie => {
                             return (
-                                <Col sm={6} md={3}><MovieCard key={movie._id} movie={movie} onClick={movie => this.OnMovieClick(movie)} /></Col>
+                                <Col xl={3} sm={6} md={4} xs={12}><MovieCard key={movie._id} movie={movie} onClick={movie => this.OnMovieClick(movie)} /></Col>
                             )
                         })
                     }

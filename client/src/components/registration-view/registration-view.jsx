@@ -19,7 +19,7 @@ export function RegistrationView(props) {
     };
 
     return (
-        <Container style={{ width: '18rem' }}>
+        <Container className='registration-view'>
         <h1>Register</h1>
             <Form>
                 <Form.Group controlId='formNewUsername'>
