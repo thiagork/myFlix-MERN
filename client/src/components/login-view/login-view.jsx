@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -36,4 +37,12 @@ export function LoginView(props) {
             </Form>
         </Container>
     );
+}
+
+LoginView.propTypes = {
+    username: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired,
+    onClick: PropTypes.func.isRequired,
+    NewUser: PropTypes.func.isRequired,
+    OnLoggedIn: PropTypes.func.isRequired
 }
