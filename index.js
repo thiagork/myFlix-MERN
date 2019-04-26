@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 "use strict";
 
@@ -14,7 +15,6 @@ const app = express();
 mongoose.connect(process.env.DB_ADDRESS, {useNewUrlParser: true});
 
 app.use(bodyParser.json());
-// eslint-disable-next-line no-unused-vars
 const auth = require('./auth.js')(app);
 const passport = require('passport');
 require('./passport.js');
