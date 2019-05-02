@@ -15,10 +15,11 @@ const app = express();
 mongoose.connect(process.env.DB_ADDRESS, {useNewUrlParser: true});
 
 app.use(bodyParser.json());
+app.use(cors()); // CORS-enabled for all origins
 const auth = require('./auth.js')(app);
 const passport = require('passport');
 require('./passport.js');
-app.use(cors()); // CORS-enabled for all origins
+
 
 app.use(validator());
 
