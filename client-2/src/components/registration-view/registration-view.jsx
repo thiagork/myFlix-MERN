@@ -15,8 +15,8 @@ export function RegistrationView(props) {
 
     const SuccessfulRegistration = (e) => {
         e.preventDefault();
-        props.UserRegistered();
-        props.OnLoggedIn(username);
+        props.userRegistered();
+        props.onLoggedIn(username);
     };
 
     return (
@@ -41,7 +41,7 @@ export function RegistrationView(props) {
                 </Form.Group>
                 <Button variant='primary' onClick={SuccessfulRegistration}>Register</Button>
                 <Form.Group controlId='formNewUser'>
-                    <Form.Text>Already registered? Click <Button style={{ padding: 0 }} variant='link' onClick={() => props.UserRegistered()}> here </Button> to login</Form.Text>
+                    <Form.Text>Already registered? Click <Button style={{ padding: 0 }} variant='link' onClick={() => props.userRegistered()}> here </Button> to login</Form.Text>
                 </Form.Group>
             </Form>
         </Container>
@@ -54,6 +54,6 @@ RegistrationView.propTypes = {
     email: PropTypes.string.isRequired,
     birthday: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
-    UserRegistered: PropTypes.func.isRequired,
-    OnLoggedIn: PropTypes.func.isRequired
+    userRegistered: PropTypes.func.isRequired,
+    onLoggedIn: PropTypes.func.isRequired
 }
