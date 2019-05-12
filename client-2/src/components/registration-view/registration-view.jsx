@@ -5,7 +5,9 @@ import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import { Link } from 'react-router-dom';
 import './registration-view.scss';
+import axios from 'axios';
 
 export function RegistrationView(props) {
     const [username, setUsername] = useState('');
@@ -13,11 +15,21 @@ export function RegistrationView(props) {
     const [email, setEmail] = useState('');
     const [birthday, setBirthday] = useState('');
 
-    const SuccessfulRegistration = (e) => {
-        e.preventDefault();
-        props.userRegistered();
-        props.onLoggedIn(username);
-    };
+    const registerNewUser = () => {
+        axios.post('https://myflix-mern.herokuapp.com/users', {
+            Username: username,
+            Password: password,
+            Email: email,
+            Birthday: birthday
+        })
+        .then(response => {
+            console.log(response.data);
+            window.open('/', '_self');
+        })
+        .catch(err => {
+            console.error('error registering the user: ', err);
+        });
+    }
 
     return (
         <Container className='registration-view'>
@@ -39,9 +51,9 @@ export function RegistrationView(props) {
                     <Form.Label>Birthday</Form.Label>
                     <Form.Control size='sm' type='date' placeholder='MM/DD/YYYY' value={birthday} onChange={e => setBirthday(e.target.value)} />
                 </Form.Group>
-                <Button variant='primary' onClick={SuccessfulRegistration}>Register</Button>
+                <Button variant='primary' onClick={registerNewUser}>Register</Button>
                 <Form.Group controlId='formNewUser'>
-                    <Form.Text>Already registered? Click <Button style={{ padding: 0 }} variant='link' onClick={() => props.userRegistered()}> here </Button> to login</Form.Text>
+                    <Form.Text>Already registered? Click <Link to={'/'}>here</Link> to login</Form.Text>
                 </Form.Group>
             </Form>
         </Container>
@@ -54,6 +66,5 @@ RegistrationView.propTypes = {
     email: PropTypes.string.isRequired,
     birthday: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
-    userRegistered: PropTypes.func.isRequired,
-    onLoggedIn: PropTypes.func.isRequired
+    userRegistered: PropTypes.func.isRequired
 }

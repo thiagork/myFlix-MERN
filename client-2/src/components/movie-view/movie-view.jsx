@@ -2,17 +2,11 @@
 /* eslint-disable no-console */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { MainView } from '../main-view/main-view';
 import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 import './movie-view.scss';
 
 export class MovieView extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {};
-    }
-
     render() {
 
         if (!this.props.movie) return null;
@@ -36,7 +30,7 @@ export class MovieView extends React.Component {
                     <p className='value'>{this.props.movie.Director.Name}</p>
                 </div>
                 <div className='return-button'>
-                    <Button variant='primary' onClick={() => this.props.returnCallback()}>Return</Button>
+                    <Link to={'/'}><Button variant='primary'>Return</Button></Link>
                 </div>
             </div>
         );
@@ -53,6 +47,5 @@ MovieView.propTypes = {
         Director: PropTypes.shape({
             Name: PropTypes.string
         })
-    }).isRequired,
-    onClick: PropTypes.func.isRequired
+    }).isRequired
 }
