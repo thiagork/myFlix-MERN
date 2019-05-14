@@ -113,10 +113,10 @@ app.get('/users/:Username', passport.authenticate('jwt', {session: false}), (req
 
 // Update user data
 app.put('/users/:Username', passport.authenticate('jwt', {session: false}), (req, res) => {
-    req.checkBody('Username', 'Username is required.').notEmpty();
+    // req.checkBody('Username', 'Username is required.').notEmpty();
     req.checkBody('Username', 'Username contains non alphanumeric characters: Not allowed.').isAlphanumeric();
-    req.checkBody('Password', 'Password is required.').notEmpty();
-    req.checkBody('Email', 'Email is required.').notEmpty();
+    // req.checkBody('Password', 'Password is required.').notEmpty();
+    // req.checkBody('Email', 'Email is required.').notEmpty();
     req.checkBody('Email', 'Email does not appear to be valid.').isEmail();
     
     const errors = req.validationErrors();
