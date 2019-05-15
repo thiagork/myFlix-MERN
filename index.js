@@ -113,11 +113,11 @@ app.get('/users/:Username', passport.authenticate('jwt', {session: false}), (req
 
 // Update user data
 app.put('/users/:Username', passport.authenticate('jwt', {session: false}), (req, res) => {
-    // req.checkBody('Username', 'Username is required.').notEmpty();
-    // req.checkBody('Username', 'Username contains non alphanumeric characters: Not allowed.').isAlphanumeric();
-    // req.checkBody('Password', 'Password is required.').notEmpty();
-    // req.checkBody('Email', 'Email is required.').notEmpty();
-    // req.checkBody('Email', 'Email does not appear to be valid.').isEmail();
+    req.checkBody('Username', 'Username is required.').notEmpty();
+    req.checkBody('Username', 'Username contains non alphanumeric characters: Not allowed.').isAlphanumeric();
+    req.checkBody('Password', 'Password is required.').notEmpty();
+    req.checkBody('Email', 'Email is required.').notEmpty();
+    req.checkBody('Email', 'Email does not appear to be valid.').isEmail();
     
     const errors = req.validationErrors();
     if (errors) {
@@ -130,6 +130,50 @@ app.put('/users/:Username', passport.authenticate('jwt', {session: false}), (req
             Password: users.hashPassword(req.body.Password),
             Email: req.body.Email
         }
+    },
+    {new: true}
+    )
+    .then(updatedUser => {
+        res.json(updatedUser);
+    })
+    .catch(err => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    });
+});
+
+// Update some specific user data
+app.patch('/users/:Username/:Field', passport.authenticate('jwt', {session: false}), (req, res) => {
+    let updateField = null;
+
+    if (req.params.Field === 'Username') {
+        req.checkBody('Username', 'Username is required.').notEmpty();
+        req.checkBody('Username', 'Username contains non alphanumeric characters: Not allowed.').isAlphanumeric();
+        updateField = {
+            Username: req.body.Username
+        };
+    } else if (req.params.Field === 'Password'){
+        req.checkBody('Password', 'Password is required.').notEmpty();
+        updateField = {
+            Password: users.hashPassword(req.body.Password)
+        };
+    } else if (req.params.Field === 'Email') {
+        req.checkBody('Email', 'Email is required.').notEmpty();
+        req.checkBody('Email', 'Email does not appear to be valid.').isEmail();
+        updateField = {
+            Email: req.body.Email
+        };
+    } else {
+        return res.status(422).send('Invalid Field. Expected Username, Password or Email');
+    }
+    
+    const errors = req.validationErrors();
+    if (errors) {
+        return res.status(422).json({errors: errors});
+    }
+            
+    users.findOneAndUpdate({Username: req.params.Username}, {
+        $set: updateField
     },
     {new: true}
     )
