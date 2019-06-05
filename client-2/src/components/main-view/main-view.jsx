@@ -22,15 +22,17 @@ export class MainView extends React.Component {
 
         this.state = {
             movies: [],
-            user: null
+            user: null,
         };
+
+        this.updateProfile = this.updateProfile.bind(this);
     }
 
     componentDidMount() {
         const accessToken = localStorage.getItem('token');
         if (accessToken !== null) {
             this.setState({
-                user: localStorage.getItem('user')
+                user: JSON.parse(localStorage.getItem('user')) // Required so data persists after login
             });
             this.getMovies(accessToken);
         }
@@ -52,13 +54,32 @@ export class MainView extends React.Component {
 
 
     onLoggedIn(authData) {
+        const config = {
+            Username: authData.user.Username,
+            Email: authData.user.Email,
+            Birthday: authData.user.Birthday,
+            FavoriteMovies: authData.user.FavoriteMovies
+        }
+
         this.setState({
-            user: authData.user.Username
+            user: config
         });
 
         localStorage.setItem('token', authData.token);
-        localStorage.setItem('user', authData.user.Username);
+        localStorage.setItem('user', JSON.stringify(config));
         this.getMovies(authData.token);
+    }
+
+    updateProfile(field, newValue) {
+        // Update user state
+        let config = this.state.user;
+        config[field] = newValue;
+        this.setState({
+            user: config
+        });
+
+        // Update localstorage accordingly
+        localStorage.setItem('user', JSON.stringify(this.state.user));
     }
 
     render() {
@@ -76,9 +97,9 @@ export class MainView extends React.Component {
                             }
                         }} />
                         <Route path='/register' render={() => <RegistrationView />} />
-                        <Route path='/profile' render={() => <ProfileView movies={this.state.movies} />} />
+                        <Route path='/profile' render={() => <ProfileView movies={this.state.movies} user={this.state.user} updateProfile={this.updateProfile} />} />
                         <Route path='/movies/:Id' render={({ match }) => <Col><MovieView movie={movies.find(movie => movie._id === match.params.Id)} /></Col>} />
-                        <Route path='/genres/:Genre' render={() => <GenreView />}/>
+                        <Route path='/genres/:Genre' render={() => <GenreView />} />
                         <Route path='/directors/:Director' render={() => <DirectorView />} />
                     </Row>
                 </Container>
