@@ -163,8 +163,13 @@ app.patch('/users/:Username/:Field', passport.authenticate('jwt', {session: fals
         updateField = {
             Email: req.body.Email
         };
+    } else if (req.params.Field === 'Birthday'){
+        req.checkBody('Birthday', 'Birthday is required.').notEmpty();
+        updateField = {
+            Birthday: req.body.Birthday
+        };
     } else {
-        return res.status(422).send('Invalid Field. Expected Username, Password or Email');
+        return res.status(422).send('Invalid Field. Expected Username, Password, Email or Birthday');
     }
     
     const errors = req.validationErrors();
