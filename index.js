@@ -202,7 +202,6 @@ app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', {sessi
         res.json(updatedUser);
     })
     .catch(err => {
-        console.error(err);
         res.status(500).send('Error :' + err);
     });
 });

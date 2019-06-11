@@ -82,6 +82,8 @@ export class MainView extends React.Component {
         localStorage.setItem('user', JSON.stringify(this.state.user));
     }
 
+
+
     render() {
         const { movies, user } = this.state;
 
@@ -98,7 +100,7 @@ export class MainView extends React.Component {
                         }} />
                         <Route path='/register' render={() => <RegistrationView />} />
                         <Route path='/profile' render={() => <ProfileView movies={this.state.movies} user={this.state.user} updateProfile={this.updateProfile} />} />
-                        <Route path='/movies/:Id' render={({ match }) => <Col><MovieView movie={movies.find(movie => movie._id === match.params.Id)} /></Col>} />
+                        <Route path='/movies/:Id' render={({ match }) => <Col><MovieView user={this.state.user} movie={movies.find(movie => movie._id === match.params.Id)} updateProfile={this.updateProfile} /></Col>} />
                         <Route path='/genres/:Genre' render={() => <GenreView />} />
                         <Route path='/directors/:Director' render={() => <DirectorView />} />
                     </Row>

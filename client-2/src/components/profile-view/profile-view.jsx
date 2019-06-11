@@ -79,7 +79,7 @@ class EditProfile extends React.Component {
 
         this.state = {
             isOpen: null,
-            userInput: null
+            userInput: ''
         };
 
         this.submitChange = this.submitChange.bind(this);
@@ -98,7 +98,7 @@ class EditProfile extends React.Component {
                 this.resetUserInput();
             })
             .catch(err => {
-                console.log(err);
+                console.error(err);
             });
     }
 
@@ -113,7 +113,7 @@ class EditProfile extends React.Component {
     resetUserInput() {
         this.setState({
             isOpen: null,
-            userInput: null
+            userInput: ''
         });
     }
 
@@ -124,7 +124,7 @@ class EditProfile extends React.Component {
                 <Button onClick={() => this.toggleCollapse()} variant='secondary' size='sm'>Edit</Button>
                 <Collapse in={this.state.isOpen}>
                     <div>
-                        <Form.Control type={this.props.type} placeholder={`Enter ${this.props.field}`} onChange={(e) => this.setState({ userInput: e.target.value })} />
+                        <Form.Control type={this.props.type} value={this.state.userInput} placeholder={`Enter ${this.props.field}`} onChange={(e) => this.setState({ userInput: e.target.value })} />
                         <Button variant='primary' size='sm' onClick={() => this.submitChange(this.props.field, this.state.userInput)}>Submit</Button>
                     </div>
                 </Collapse>
