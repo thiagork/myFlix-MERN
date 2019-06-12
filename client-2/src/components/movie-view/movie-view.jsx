@@ -8,10 +8,21 @@ import { Link } from 'react-router-dom';
 import './movie-view.scss';
 
 export class MovieView extends React.Component {
+
     addMovieToFavorites() {
-        let movieId = this.props.movie._id;
-        console.log(movieId);
-        axios.post('https://myflix-mern.herokuapp.com/users/johndoe/movies/5c97cc646728671b439bc21a', {
+        axios.post(`https://myflix-mern.herokuapp.com/users/${this.props.user.Username}/movies/${this.props.movie._id}`, {}, {
+            headers: { Authorization: `Bearer ${localStorage.token}` }
+        })
+            .then(response => {
+                this.props.updateProfile('FavoriteMovies', response.data.FavoriteMovies);
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    }
+
+    removeMovieFromFavorites() {
+        axios.delete(`https://myflix-mern.herokuapp.com/users/${this.props.user.Username}/movies/${this.props.movie._id}`, {
             headers: { Authorization: `Bearer ${localStorage.token}` }
         })
             .then(response => {
@@ -30,7 +41,12 @@ export class MovieView extends React.Component {
             <div className='movie-view'>
                 <div className='movie-title'>
                     <h2 className='label'>Title</h2>
-                    <p className='value'>{this.props.movie.Title} <Button variant='primary' onClick={()=> this.addMovieToFavorites()}>Add to favorite</Button></p>
+                    <p className='value'>{this.props.movie.Title} {
+                        this.props.user.FavoriteMovies.indexOf(this.props.movie._id) > -1 ?
+                            <Button variant='danger' onClick={() => this.removeMovieFromFavorites()}>Remove from favorite</Button> :
+                            <Button variant='primary' onClick={() => this.addMovieToFavorites()}>Add to favorite</Button>
+                    }
+                    </p>
                 </div>
                 <div className='movie-description'>
                     <h3 className='label'>Description</h3>
@@ -43,9 +59,6 @@ export class MovieView extends React.Component {
                 <div className='movie-director'>
                     <h3 className='label'>Director</h3>
                     <p className='value'>{this.props.movie.Director.Name}</p>
-                </div>
-                <div className='add-to-favorite'>
-                    <Button variant='primary'>Add to favorite</Button>
                 </div>
                 <div className='return-button'>
                     <Link to={'/'}><Button variant='primary'>Return</Button></Link>

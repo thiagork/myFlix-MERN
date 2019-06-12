@@ -95,11 +95,11 @@ export class MainView extends React.Component {
                             if (!user) {
                                 return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
                             } else {
-                                return movies.map(movie => <Col xl={3} sm={6} md={4} xs={12}><MovieCard key={movie._id} movie={movie} /></Col>);
+                                return movies.map(movie => <Col xl={3} sm={6} md={4} xs={12}><MovieCard user={user} key={movie._id} movie={movie} /></Col>);
                             }
                         }} />
                         <Route path='/register' render={() => <RegistrationView />} />
-                        <Route path='/profile' render={() => <ProfileView movies={this.state.movies} user={this.state.user} updateProfile={this.updateProfile} />} />
+                        <Route path='/profile' render={() => <ProfileView movies={this.state.movies} user={this.state.user} updateProfile={this.updateProfile} onLoggedIn={this.onLoggedIn} />} />
                         <Route path='/movies/:Id' render={({ match }) => <Col><MovieView user={this.state.user} movie={movies.find(movie => movie._id === match.params.Id)} updateProfile={this.updateProfile} /></Col>} />
                         <Route path='/genres/:Genre' render={() => <GenreView />} />
                         <Route path='/directors/:Director' render={() => <DirectorView />} />
