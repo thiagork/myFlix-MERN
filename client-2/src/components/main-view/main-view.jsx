@@ -101,8 +101,8 @@ export class MainView extends React.Component {
                         <Route path='/register' render={() => <RegistrationView />} />
                         <Route path='/profile' render={() => <ProfileView movies={this.state.movies} user={this.state.user} updateProfile={this.updateProfile} onLoggedIn={this.onLoggedIn} />} />
                         <Route path='/movies/:Id' render={({ match }) => <Col><MovieView user={this.state.user} movie={movies.find(movie => movie._id === match.params.Id)} updateProfile={this.updateProfile} /></Col>} />
-                        <Route path='/genres/:Genre' render={() => <GenreView />} />
-                        <Route path='/directors/:Director' render={() => <DirectorView />} />
+                        <Route path='/genre/:Genre' render={({ match }) => <GenreView movies={this.state.movies} genre={match.params.Genre} />} />
+                        <Route path='/director/:Director' render={({ match }) => <DirectorView movies={this.state.movies} directorName={match.params.Director} />} />
                     </Row>
                 </Container>
             </Router>
