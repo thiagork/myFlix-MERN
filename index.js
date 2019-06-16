@@ -11,6 +11,7 @@ const users = Models.users;
 const cors = require('cors');
 const validator = require('express-validator');
 const app = express();
+const bcrypt = require('bcrypt');
 
 mongoose.connect(process.env.DB_ADDRESS, {useNewUrlParser: true});
 
@@ -148,7 +149,7 @@ app.patch('/users/:Username/Password', passport.authenticate('jwt', {session: fa
         Username: req.params.Username
     })
     .then(user => {
-        if (user.Password === users.hashPassword(req.body.OldPassword)) {
+        bcrypt.compare(user.Password, req.body.OldPassword, () => {
             users.findOneAndUpdate({Username: req.params.Username}, {
                 $set: {
                     Password: users.hashPassword(req.body.NewPassword)
@@ -159,13 +160,7 @@ app.patch('/users/:Username/Password', passport.authenticate('jwt', {session: fa
             .then(updatedUser => {
                 res.json(updatedUser);
             })
-            .catch(err => {
-                console.error(err);
-                res.status(500).send('Error: ' + err);
-            });
-        } else {
-            res.status(500).send('Error: Incorrect password')
-        }
+        })
     })
     .catch(err => {
         console.error(err);
