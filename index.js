@@ -183,11 +183,6 @@ app.patch('/users/:Username/:Field', passport.authenticate('jwt', {session: fals
         updateField = {
             Username: req.body.Username
         };
-    } else if (req.params.Field === 'Password'){
-        req.checkBody('Password', 'Password is required.').notEmpty();
-        updateField = {
-            Password: users.hashPassword(req.body.Password)
-        };
     } else if (req.params.Field === 'Email') {
         req.checkBody('Email', 'Email is required.').notEmpty();
         req.checkBody('Email', 'Email does not appear to be valid.').isEmail();
