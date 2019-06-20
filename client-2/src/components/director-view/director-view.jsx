@@ -49,9 +49,6 @@ export class DirectorView extends React.Component {
                             <h3 className='label'>Bio</h3>
                             <p className='value'>{this.state.director.Bio}</p>
                         </div>
-                        <div className='return-button'>
-                            <Link to={'/'}><Button variant='primary'>Return</Button></Link>
-                        </div>
                     </Col>
                 </Row>
                 <Row>

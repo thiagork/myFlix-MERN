@@ -54,14 +54,11 @@ export class MovieView extends React.Component {
                 </div>
                 <div className='movie-genre'>
                     <h3 className='label'>Genre</h3>
-                    <p className='value'>{this.props.movie.Genre.Name}</p>
+                    <p className='value'><Link to={`/genre/${this.props.movie.Genre.Name}`}>{this.props.movie.Genre.Name}</Link></p>
                 </div>
                 <div className='movie-director'>
                     <h3 className='label'>Director</h3>
-                    <p className='value'>{this.props.movie.Director.Name}</p>
-                </div>
-                <div className='return-button'>
-                    <Link to={'/'}><Button variant='primary'>Return</Button></Link>
+                    <p className='value'><Link to={`/director/${this.props.movie.Director.Name}`}>{this.props.movie.Director.Name}</Link></p>
                 </div>
             </div>
         );

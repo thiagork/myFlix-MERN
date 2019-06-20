@@ -14,7 +14,6 @@ import Form from 'react-bootstrap/Form';
 import './profile-view.scss';
 
 export class ProfileView extends React.Component {
-
     removeMovie(movieId) {
         axios.delete(`https://myflix-mern.herokuapp.com/users/${this.props.user.Username}/movies/${movieId}`, {
             headers: { Authorization: `Bearer ${localStorage.token}` }
@@ -26,6 +25,21 @@ export class ProfileView extends React.Component {
                 console.error(err);
             });
     }
+
+    deleteAccount() {
+        axios.delete(`https://myflix-mern.herokuapp.com/users/${this.props.user.Username}`, {
+            headers: { Authorization: `Bearer ${localStorage.token}` }
+        })
+            .then(() => {
+                console.log('User deleted.');
+                localStorage.clear();
+                this.props.resetUserState();
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    }
+
 
     render() {
         if (!localStorage.user) {
@@ -42,6 +56,10 @@ export class ProfileView extends React.Component {
                                 <h3 className='label'>Username</h3>
                                 <p className='value'>{this.props.user.Username} <EditProfile type={'Username'} field={'Username'} user={this.props.user} updateProfile={this.props.updateProfile} /></p>
                             </div>
+                            <div className='user-password'>
+                                <h3 className='label'>Password</h3>
+                                <p className='value'>******** <ChangePassword type={'Password'} field={'Password'} user={this.props.user} updateProfile={this.props.updateProfile} /></p>
+                            </div>
                             <div className='user-email'>
                                 <h3 className='label'>Email</h3>
                                 <p className='value'>{this.props.user.Email} <EditProfile type={'Email'} field={'Email'} user={this.props.user} updateProfile={this.props.updateProfile} /></p>
@@ -49,6 +67,10 @@ export class ProfileView extends React.Component {
                             <div className='user-birthday'>
                                 <h3 className='label'>Birthday</h3>
                                 <p className='value'>{this.props.user.Birthday} <EditProfile type={'Date'} field={'Birthday'} user={this.props.user} updateProfile={this.props.updateProfile} /></p>
+                            </div>
+                            <div className='user-delete-account'>
+                                <Button onClick={() => this.deleteAccount()} variant='danger' size='sm'>Delete account</Button>
+                                <br></br>
                             </div>
                         </Col>
                     </Row>
@@ -66,9 +88,81 @@ export class ProfileView extends React.Component {
                             </ListGroup>
                         </Col>
                     </Row>
-                </Container>
+                </Container >
             );
         }
+    }
+}
+
+class ChangePassword extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isOpen: null,
+            oldPassword: '',
+            newPassword: '',
+            newPasswordRepeat: ''
+        };
+
+        this.submitChange = this.submitChange.bind(this);
+    }
+
+    submitChange(oldPassword, newPassword) {
+        axios.patch(`https://myflix-mern.herokuapp.com/users/${this.props.user.Username}/Password`, {
+            OldPassword: `${oldPassword}`,
+            NewPassword: `${newPassword}`
+        },
+            {
+                headers: { Authorization: `Bearer ${localStorage.token}` }
+            })
+            .then(response => {
+                console.log('Password change succeeded');
+                this.resetUserInput();
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    }
+
+
+    toggleCollapse() {
+        const { isOpen } = this.state;
+        this.setState({
+            isOpen: !isOpen
+        });
+    }
+
+
+    resetUserInput() {
+        this.setState({
+            isOpen: null,
+            oldPassword: '',
+            newPassword: '',
+            newPasswordRepeat: ''
+        });
+    }
+
+
+    render() {
+        return (
+            <>
+                <Button onClick={() => this.toggleCollapse()} variant='secondary' size='sm'>Edit</Button>
+                <Collapse in={this.state.isOpen}>
+                    <div>
+                        <Form.Control type={this.props.type} value={this.state.oldPassword} placeholder={`Enter current ${this.props.field}`} onChange={(e) => this.setState({ oldPassword: e.target.value })} />
+                        <Form.Control type={this.props.type} value={this.state.newPassword} placeholder={`Enter new ${this.props.field}`} onChange={(e) => this.setState({ newPassword: e.target.value })} />
+                        <Form.Control type={this.props.type} value={this.state.newPasswordRepeat} placeholder={`Repeat new ${this.props.field}`} onChange={(e) => this.setState({ newPasswordRepeat: e.target.value })} />
+                        {
+                            this.state.newPassword === this.state.newPasswordRepeat && this.state.newPassword !== '' && this.state.oldPassword !== '' ?
+                                <Button variant='primary' size='sm' onClick={() => this.submitChange(this.state.oldPassword, this.state.newPassword)}>Submit</Button> :
+                                <Button variant='secondary' size='sm'>Submit</Button>
+                        }
+                    </div>
+                </Collapse>
+            </>
+        );
+
     }
 }
 
@@ -84,6 +178,7 @@ class EditProfile extends React.Component {
 
         this.submitChange = this.submitChange.bind(this);
     }
+
 
     submitChange(field, userInput) {
         const config = {};
@@ -110,6 +205,7 @@ class EditProfile extends React.Component {
         });
     }
 
+
     resetUserInput() {
         this.setState({
             isOpen: null,
@@ -130,5 +226,6 @@ class EditProfile extends React.Component {
                 </Collapse>
             </>
         );
+
     }
 }
