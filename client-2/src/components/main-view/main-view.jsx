@@ -2,10 +2,13 @@
 /* eslint-disable no-console */
 import React from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import { setMovies } from '../../actions/actions.js';
+import MoviesList from '../movies-list/movies-list';
 import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
-import { MovieView } from '../movie-view/movie-view';
+import MovieView from '../movie-view/movie-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import { GenreView } from '../genre-view/genre-view';
 import { DirectorView } from '../director-view/director-view';
@@ -24,8 +27,7 @@ export class MainView extends React.Component {
         super(props);
 
         this.state = {
-            movies: [],
-            user: null,
+            user: null
         };
 
         this.updateProfile = this.updateProfile.bind(this);
@@ -46,9 +48,7 @@ export class MainView extends React.Component {
             headers: { Authorization: `Bearer ${token}` }
         })
             .then(response => {
-                this.setState({
-                    movies: response.data
-                });
+                this.props.setMovies(response.data);
             })
             .catch(err => {
                 console.error(err);
@@ -93,7 +93,7 @@ export class MainView extends React.Component {
 
 
     render() {
-        const { movies, user } = this.state;
+        const { user } = this.state;
         if (!user) {
             return (
                 <Router>
@@ -109,25 +109,25 @@ export class MainView extends React.Component {
         } else {
             return (
                 <Router>
-                    <Navbar sticky='top' bg='dark' variant='dark'>
-                        <Nav className='nav-bar'>
-                            <Link className='nav-link' to='/'>Home</Link>
-                            <Link className='nav-link' to='/profile'>Profile</Link>
-                        </Nav>
-                    </Navbar>
-                    <Container className='main-view' fluid='true'>
-                        <Row>
-                            <Route exact path='/' render={() => {
-                                return movies.map(movie => <Col xl={3} sm={6} md={4} xs={12}><MovieCard user={user} key={movie._id} movie={movie} /></Col>);
-                            }} />
-                            <Route path='/profile' render={() => <ProfileView movies={this.state.movies} user={this.state.user} updateProfile={this.updateProfile} resetUserState={() => this.resetUserState()} onLoggedIn={this.onLoggedIn} />} />
-                            <Route path='/movies/:Id' render={({ match }) => <Col><MovieView user={this.state.user} movie={movies.find(movie => movie._id === match.params.Id)} updateProfile={this.updateProfile} /></Col>} />
-                            <Route path='/genre/:Genre' render={({ match }) => <GenreView movies={this.state.movies} genre={match.params.Genre} />} />
-                            <Route path='/director/:Director' render={({ match }) => <DirectorView movies={this.state.movies} directorName={match.params.Director} />} />
-                        </Row>
-                    </Container>
-                </Router>
+                <Navbar sticky='top' bg='dark' variant='dark'>
+                    <Nav className='nav-bar'>
+                        <Link className='nav-link' to='/'>Home</Link>
+                        <Link className='nav-link' to='/profile'>Profile</Link>
+                    </Nav>
+                </Navbar>
+                <Container className='main-view' fluid='true'>
+                    <Row>
+                        <Route exact path='/' render={() => <MoviesList /> } />
+                        <Route path='/profile' render={() => <ProfileView user={this.state.user} updateProfile={this.updateProfile} resetUserState={() => this.resetUserState()} onLoggedIn={this.onLoggedIn} />} />
+                        <Route path='/movies/:Id' render={({ match }) => <Col><MovieView user={this.state.user} updateProfile={this.updateProfile} /></Col>} />
+                        <Route path='/genre/:Genre' render={({ match }) => <GenreView genre={match.params.Genre} />} />
+                        <Route path='/director/:Director' render={({ match }) => <DirectorView directorName={match.params.Director} />} />
+                    </Row>
+                </Container>
+            </Router>
             );
         }
     }
 }
+
+export default connect(null, { setMovies } ) (MainView);

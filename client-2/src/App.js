@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
-import { MainView } from './components/main-view/main-view';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import moviesApp from './reducers/reducers.js';
+import MainView from './components/main-view/main-view.jsx';
 import './App.css';
+
+const store = createStore(moviesApp);
 
 class App extends Component {
   render() {
     return (
-      <MainView />
+      <Provider store={store}>
+        <MainView />
+      </Provider>
     );
   }
 }
