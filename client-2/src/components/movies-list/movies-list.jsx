@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { MovieCard } from '../movie-card/movie-card';
+import VisibilityFilterInput from '../visibility-filter-input/visibility-filter-input';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -8,13 +9,13 @@ import Col from 'react-bootstrap/Col';
 const mapStateToProps = state => {
     const { movies, visibilityFilter, sortColumn } = state;
 
-    let sortedMovies = movies.concat().sort((a,b) => {
+    let moviesToShow = movies.concat().sort((a,b) => {
         if (a[sortColumn] < b[sortColumn]) return -1;
         if (a[sortColumn] > b[sortColumn]) return 1;
         return 0;
     });
 
-    return { movies: sortedMovies };
+    return { movies: moviesToShow };
 }
 
 function MoviesList(props) {

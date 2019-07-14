@@ -5,7 +5,11 @@ import moviesApp from './reducers/reducers.js';
 import MainView from './components/main-view/main-view.jsx';
 import './App.css';
 
-const store = createStore(moviesApp);
+const store = createStore(
+  moviesApp, /* preloadedState, */
++  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
+// const store = createStore(moviesApp);
 
 class App extends Component {
   render() {

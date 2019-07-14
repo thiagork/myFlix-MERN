@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import React from 'react';
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -70,3 +70,12 @@ export class GenreView extends React.Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+    const { movies } = state;
+    return {
+        movies: movies
+    };
+}
+
+export default connect(mapStateToProps)(GenreView);

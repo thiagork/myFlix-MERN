@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import React from 'react';
+import { connect } from 'react-redux';
+import { setMovies, setUser, updateUser } from '../../actions/actions.js';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -19,7 +21,8 @@ export class ProfileView extends React.Component {
             headers: { Authorization: `Bearer ${localStorage.token}` }
         })
             .then(response => {
-                this.props.updateProfile('FavoriteMovies', response.data.FavoriteMovies);
+                this.props.updateUser(this.props.user, 'FavoriteMovies', response.data.FavoriteMovies);
+                localStorage.setItem('user', JSON.stringify(this.props.user));
             })
             .catch(err => {
                 console.error(err);
@@ -33,7 +36,7 @@ export class ProfileView extends React.Component {
             .then(() => {
                 console.log('User deleted.');
                 localStorage.clear();
-                this.props.resetUserState();
+                this.props.setUser('');
             })
             .catch(err => {
                 console.error(err);
@@ -62,7 +65,7 @@ export class ProfileView extends React.Component {
                             </div>
                             <div className='user-email'>
                                 <h3 className='label'>Email</h3>
-                                <p className='value'>{this.props.user.Email} <EditProfile type={'Email'} field={'Email'} user={this.props.user} updateProfile={this.props.updateProfile} /></p>
+                                <p className='value'>{this.props.user.Email} <EditProfile type={'Email'} field={'Email'} user={this.props.user} updateUser={this.props.updateUser} updateProfile={this.updateProfile} /></p>
                             </div>
                             <div className='user-birthday'>
                                 <h3 className='label'>Birthday</h3>
@@ -189,7 +192,8 @@ class EditProfile extends React.Component {
                 headers: { Authorization: `Bearer ${localStorage.token}` }
             })
             .then(response => {
-                this.props.updateProfile(field, userInput);
+                this.props.updateUser(this.props.user, field, userInput);
+                localStorage.setItem('user', JSON.stringify(this.props.user));
                 this.resetUserInput();
             })
             .catch(err => {
@@ -229,3 +233,15 @@ class EditProfile extends React.Component {
 
     }
 }
+
+
+const mapStateToProps = state => {
+    const { user, movies } = state;
+    return {
+        user: user,
+        movies: movies
+    };
+}
+
+
+export default connect(mapStateToProps, { setMovies, setUser, updateUser })(ProfileView)

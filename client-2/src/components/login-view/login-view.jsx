@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { setMovies, setUser } from '../../actions/actions.js';
 import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -9,9 +11,11 @@ import { Link } from 'react-router-dom';
 import './login-view.scss';
 import axios from 'axios';
 
+
 export function LoginView(props) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -19,19 +23,27 @@ export function LoginView(props) {
             Username: username,
             Password: password
         })
-        .then(response => {
-            const data = response.data;
-            props.onLoggedIn(data);
-        })
-        .catch(err => {
-            console.error(err, 'No such user.')
-        });
+            .then(response => {
+                console.log(response);
+                const userInfo = {
+                    Username: response.data.user.Username,
+                    Email: response.data.user.Email,
+                    Birthday: response.data.user.Birthday,
+                    FavoriteMovies: response.data.user.FavoriteMovies
+                }
+                props.setUser(userInfo);
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('user', JSON.stringify(userInfo));
+                window.open('/', '_self');
+            })
+            .catch(err => {
+                console.error(err, 'No such user.')
+            });
     };
-
 
     return (
         <Container className='login-view'>
-        <h1>Login</h1>
+            <h1>Login</h1>
             <Form>
                 <Form.Group controlId='formUsername'>
                     <Form.Label>Username:</Form.Label>
@@ -50,9 +62,12 @@ export function LoginView(props) {
     );
 }
 
+
 LoginView.propTypes = {
     username: PropTypes.string.isRequired,
     password: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired,
-    onLoggedIn: PropTypes.func.isRequired
+    onClick: PropTypes.func.isRequired
 }
+
+
+export default connect(null, { setMovies, setUser })(LoginView)
