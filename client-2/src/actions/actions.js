@@ -12,6 +12,11 @@ export const setMovies = (value) => {
 }
 
 export const setUser = (value) => {
+    if (value === '') {
+        localStorage.clear();
+    } else {
+        localStorage.setItem('user', JSON.stringify(value));
+    };
     return { type: SET_USER, value };
 }
 
@@ -45,21 +50,19 @@ export const addMovieToFavorites = (movieId) => dispatch => {
         .then(response => response.data)
         .then(user => {
             dispatch(setUser(user));
-            localStorage.setItem('user', JSON.stringify(user));
         })
         .catch(err => {
             console.error(err);
         });
 }
 
-export const removeMovieFromFavorites = (movieId) =>  dispatch => {
+export const removeMovieFromFavorites = (movieId) => dispatch => {
     axios.delete(`https://myflix-mern.herokuapp.com/users/${JSON.parse(localStorage.user).Username}/movies/${movieId}`, {
         headers: { Authorization: `Bearer ${localStorage.token}` }
     })
-        .then(response =>  response.data)
+        .then(response => response.data)
         .then(user => {
             dispatch(setUser(user));
-            localStorage.setItem('user', JSON.stringify(user))
         })
         .catch(err => {
             console.error(err);
@@ -72,8 +75,8 @@ export const deleteAccount = () => dispatch => {
     })
         .then(() => {
             console.log('User deleted.');
-            localStorage.clear();
             dispatch(setUser(''));
+            window.open('/', '_self');
         })
         .catch(err => {
             console.error(err);
@@ -91,7 +94,6 @@ export const updateUser = (field, userInput, callback) => dispatch => {
         .then(response => response.data)
         .then((user) => {
             dispatch(setUser(user));
-            localStorage.setItem('user', JSON.stringify(user));
             callback();
         })
         .catch(err => {
