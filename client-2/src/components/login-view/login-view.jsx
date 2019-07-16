@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { setMovies, setUser } from '../../actions/actions.js';
+import { getMovies, setUser } from '../../actions/actions.js';
 import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -34,7 +34,7 @@ export function LoginView(props) {
                 props.setUser(userInfo);
                 localStorage.setItem('token', response.data.token);
                 localStorage.setItem('user', JSON.stringify(userInfo));
-                window.open('/', '_self');
+                props.getMovies(response.data.token);
             })
             .catch(err => {
                 console.error(err, 'No such user.')
@@ -70,4 +70,4 @@ LoginView.propTypes = {
 }
 
 
-export default connect(null, { setMovies, setUser })(LoginView)
+export default connect(null, { getMovies, setUser })(LoginView)

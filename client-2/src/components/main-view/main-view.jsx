@@ -4,7 +4,7 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
-import { setMovies, setUser } from '../../actions/actions.js';
+import { setUser, getMovies } from '../../actions/actions.js';
 import MoviesList from '../movies-list/movies-list';
 import LoginView from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
@@ -28,21 +28,8 @@ export class MainView extends React.Component {
         const accessToken = localStorage.getItem('token');
         if (accessToken !== null) {
             this.props.setUser(JSON.parse(localStorage.user));
-            this.getMovies(accessToken);
+            this.props.getMovies(accessToken);
         }
-    }
-
-    getMovies(token) {
-        console.log('getting movies (mainview)');
-        axios.get('https://myflix-mern.herokuapp.com/movies', {
-            headers: { Authorization: `Bearer ${token}` }
-        })
-            .then(response => {
-                this.props.setMovies(response.data);
-            })
-            .catch(err => {
-                console.error(err);
-            });
     }
 
 
@@ -72,7 +59,7 @@ export class MainView extends React.Component {
                 <Container className='main-view' fluid='true'>
                     <Row>
                         <Route exact path='/' render={() => <MoviesList /> } />
-                        <Route path='/profile' render={() => <ProfileView updateProfile={this.updateProfile} />} />
+                        <Route path='/profile' render={() => <ProfileView />} />
                         <Route path='/movies/:Id' render={({ match }) => <Col><MovieView movieId={match.params.Id}/></Col>} />
                         <Route path='/genre/:Genre' render={({ match }) => <GenreView genre={match.params.Genre} />} />
                         <Route path='/director/:Director' render={({ match }) => <DirectorView directorName={match.params.Director} />} />
@@ -94,4 +81,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps, { setMovies, setUser } ) (MainView);
+export default connect(mapStateToProps, { setUser, getMovies } ) (MainView);
