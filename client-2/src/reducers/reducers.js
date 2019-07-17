@@ -32,9 +32,8 @@ function sortColumn(state = 'title', action) {
 function user(state = '', action) {
     switch (action.type) {
         case SET_USER:
-            let newState = {...action.value};
-            delete newState.Password;
-            return newState;
+            console.log(action);
+            return action.newValue;
         default:
             return state;
     }

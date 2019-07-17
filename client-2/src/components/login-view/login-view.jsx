@@ -2,44 +2,18 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { getMovies, setUser } from '../../actions/actions.js';
+import { loginUser } from '../../actions/actions.js';
 import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { Link } from 'react-router-dom';
 import './login-view.scss';
-import axios from 'axios';
 
 
 export function LoginView(props) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        axios.post('https://myflix-mern.herokuapp.com/login/', {
-            Username: username,
-            Password: password
-        })
-            .then(response => {
-                console.log(response);
-                const userInfo = {
-                    Username: response.data.user.Username,
-                    Email: response.data.user.Email,
-                    Birthday: response.data.user.Birthday,
-                    FavoriteMovies: response.data.user.FavoriteMovies
-                }
-                props.setUser(userInfo);
-                localStorage.setItem('token', response.data.token);
-                localStorage.setItem('user', JSON.stringify(userInfo));
-                props.getMovies(response.data.token);
-            })
-            .catch(err => {
-                console.error(err, 'No such user.')
-            });
-    };
 
     return (
         <Container className='login-view'>
@@ -53,7 +27,7 @@ export function LoginView(props) {
                     <Form.Label>Password:</Form.Label>
                     <Form.Control size='sm' type='password' placeholder='Password' value={password} onChange={e => setPassword(e.target.value)} />
                 </Form.Group>
-                <Button variant='primary' onClick={handleSubmit}>Submit</Button>
+                <Button variant='primary' onClick={() => props.loginUser(username, password)}>Submit</Button>
                 <Form.Group controlId='formNewUser'>
                     <Form.Text>New user? Click <Link to={`/register`}>here</Link> to register</Form.Text>
                 </Form.Group>
@@ -70,4 +44,4 @@ LoginView.propTypes = {
 }
 
 
-export default connect(null, { getMovies, setUser })(LoginView)
+export default connect(null, { loginUser })(LoginView)

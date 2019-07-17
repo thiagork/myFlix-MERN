@@ -6,18 +6,20 @@ export const SET_FILTER = 'SET_FILTER';
 export const SET_SORT_COLUMN = 'SET_SORT_COLUMN';
 
 
-// Pure actions
+// Normal actions
 export const setMovies = (value) => {
     return { type: SET_MOVIES, value };
 }
 
 export const setUser = (value) => {
+    let newValue = {...value};
+    delete newValue.Password;
     if (value === '') {
         localStorage.clear();
     } else {
-        localStorage.setItem('user', JSON.stringify(value));
+        localStorage.setItem('user', JSON.stringify(newValue));
     };
-    return { type: SET_USER, value };
+    return { type: SET_USER, newValue };
 }
 
 export const setFilter = (value) => {
@@ -100,3 +102,19 @@ export const updateUser = (field, userInput, callback) => dispatch => {
             console.error(err);
         });
 }
+
+export const loginUser = (username, password) => dispatch => {
+    axios.post('https://myflix-mern.herokuapp.com/login/', {
+        Username: username,
+        Password: password
+    })
+        .then(response => response.data)
+        .then((response) => {
+            dispatch(setUser(response.user));
+            localStorage.setItem('token', response.token);
+            dispatch(getMovies(response.token));
+        })
+        .catch(err => {
+            console.error(err, 'No such user.')
+        });
+};

@@ -1,13 +1,11 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import React from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { setUser, getMovies } from '../../actions/actions.js';
 import MoviesList from '../movies-list/movies-list';
 import LoginView from '../login-view/login-view';
-import { MovieCard } from '../movie-card/movie-card';
 import MovieView from '../movie-view/movie-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import GenreView from '../genre-view/genre-view';

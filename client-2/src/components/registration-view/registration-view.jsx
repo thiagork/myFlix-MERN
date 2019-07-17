@@ -22,8 +22,7 @@ export function RegistrationView(props) {
             Email: email,
             Birthday: birthday
         })
-        .then(response => {
-            console.log(response.data);
+        .then(() => {
             window.open('/', '_self');
         })
         .catch(err => {
