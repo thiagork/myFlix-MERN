@@ -1,20 +1,20 @@
 import { combineReducers } from 'redux';
 
-import { SET_FILTER, SET_MOVIES, SET_USER, SET_SORT_COLUMN } from '../actions/actions.js';
+import { SET_MOVIES, SORT_AZ, SORT_ZA, SORT_DIRECTOR, SORT_GENRE, SET_USER, SET_SORT_COLUMN, SEARCH_BAR_VISIBLE, SEARCH_VALUE } from '../actions/actions.js';
 
-function visibilityFilter(state = '', action) {
-    switch (action.type) {
-        case SET_FILTER:
-            return action.value;
-        default:
-            return state;
-    }
-}
 
 function movies(state = [], action) {
     switch (action.type) {
         case SET_MOVIES:
             return action.value;
+        case SORT_AZ:
+            return [...state];
+        case SORT_ZA:
+                return [...state];
+        case SORT_DIRECTOR:
+                return [...state];
+        case SORT_GENRE:
+                return [...state];
         default:
             return state;
     }
@@ -32,8 +32,25 @@ function sortColumn(state = 'title', action) {
 function user(state = '', action) {
     switch (action.type) {
         case SET_USER:
-            console.log(action);
             return action.newValue;
+        default:
+            return state;
+    }
+}
+
+function searchBarVisible(state = false, action) {
+    switch (action.type) {
+        case SEARCH_BAR_VISIBLE:
+            return action.value;
+        default:
+            return state;
+    }
+}
+
+function searchValue(state = '', action) {
+    switch (action.type) {
+        case SEARCH_VALUE:
+            return action.value;
         default:
             return state;
     }
@@ -41,10 +58,11 @@ function user(state = '', action) {
 
 
 const moviesApp = combineReducers({
-    visibilityFilter,
     sortColumn,
     movies,
-    user
+    user,
+    searchBarVisible,
+    searchValue
 });
 
 export default moviesApp;

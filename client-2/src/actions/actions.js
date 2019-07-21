@@ -1,14 +1,36 @@
 import axios from 'axios';
 
 export const SET_MOVIES = 'SET_MOVIES';
+export const SORT_AZ = 'SORT_AZ';
+export const SORT_ZA = 'SORT_ZA';
+export const SORT_DIRECTOR = 'SORT_DIRECTOR';
+export const SORT_GENRE = 'SORT_GENRE';
 export const SET_USER = 'SET_USER';
 export const SET_FILTER = 'SET_FILTER';
 export const SET_SORT_COLUMN = 'SET_SORT_COLUMN';
+export const SEARCH_BAR_VISIBLE = 'SEARCH_BAR_VISIBLE';
+export const SEARCH_VALUE = 'SEARCH_VALUE';
 
 
 // Normal actions
 export const setMovies = (value) => {
     return { type: SET_MOVIES, value };
+}
+
+export const sortAZ = () => {
+    return { type: SORT_AZ };
+}
+
+export const sortZA = () => {
+    return { type: SORT_ZA };
+}
+
+export const sortDirector = () => {
+    return { type: SORT_DIRECTOR };
+}
+
+export const sortGenre = () => {
+    return { type: SORT_GENRE };
 }
 
 export const setUser = (value) => {
@@ -22,14 +44,17 @@ export const setUser = (value) => {
     return { type: SET_USER, newValue };
 }
 
-export const setFilter = (value) => {
-    return { type: SET_FILTER, value };
-}
-
 export const setSortColumn = (value) => {
     return { type: SET_SORT_COLUMN, value };
 }
 
+export const searchBarVisible = (value) => {
+    return { type: SEARCH_BAR_VISIBLE, value };
+}
+
+export const makeSearch = (value) => {
+    return { type: SEARCH_VALUE, value };
+}
 
 // Thunked actions (async)
 export const getMovies = () => dispatch => {

@@ -1,29 +1,50 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { MovieCard } from '../movie-card/movie-card';
-import VisibilityFilterInput from '../visibility-filter-input/visibility-filter-input';
+import { searchBarVisible } from '../../actions/actions.js';
+import MovieCard from '../movie-card/movie-card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Alert from 'react-bootstrap/Alert'
 
-const mapStateToProps = state => {
-    const { movies, visibilityFilter, sortColumn } = state;
-
-    let moviesToShow = movies.concat().sort((a,b) => {
-        if (a[sortColumn] < b[sortColumn]) return -1;
-        if (a[sortColumn] > b[sortColumn]) return 1;
-        return 0;
-    });
-
-    return { movies: moviesToShow };
-}
 
 function MoviesList(props) {
-    const { movies } = props;
 
-    if (!movies) return <div className='main-view' />;
+    useEffect(() => {
+        props.searchBarVisible(true);
 
-    return movies.map(movie => <Col xl={3} sm={6} md={4} xs={12}><MovieCard key={movie._id} movie={movie} /></Col>); // user={user} missing
+        return function cleanup() {
+            props.searchBarVisible(false);
+        }
+    });
+
+    const moviesToShow = (movies = props.movies, searchValue = props.searchValue) => {
+        if (searchValue.length > 1) {
+            return movies.filter(movie => (movie.Title.toLowerCase().indexOf(searchValue.toLocaleLowerCase()) > -1) || (movie.Genre.Name.toLowerCase().indexOf(searchValue.toLocaleLowerCase()) > -1) || (movie.Director.Name.toLowerCase().indexOf(searchValue.toLocaleLowerCase()) > -1))
+        } else {
+            return movies;
+        }
+    }
+
+    if (!props.movies) return <div className='main-view' />;
+
+    return <Container className='movies-list'>
+        {moviesToShow()[0] ?
+            <Row>{moviesToShow().map(movie => <Col xl={3} sm={6} md={4} xs={12}> <MovieCard key={movie._id} movie={movie} /></Col>)}</Row> :
+            <Row><Col><Alert variant='danger'>Your search returned no results.</Alert></Col></Row>
+        }
+    </Container>
 }
 
-export default connect(mapStateToProps) (MoviesList);
+
+const mapStateToProps = state => {
+    const { movies, searchValue } = state;
+
+    return {
+        movies: movies,
+        searchValue: searchValue
+    };
+}
+
+
+export default connect(mapStateToProps, { searchBarVisible })(MoviesList);
