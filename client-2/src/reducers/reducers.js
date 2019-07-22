@@ -1,29 +1,70 @@
 import { combineReducers } from 'redux';
 
-import { SET_MOVIES, SORT_AZ, SORT_ZA, SORT_DIRECTOR, SORT_GENRE, SET_USER, SET_SORT_COLUMN, SEARCH_BAR_VISIBLE, SEARCH_VALUE } from '../actions/actions.js';
+import { SET_MOVIES, SORT_AZ, SORT_ZA, SORT_DIRECTOR, SORT_GENRE, SORT_ID, SET_USER, SEARCH_BAR_VISIBLE, SEARCH_VALUE } from '../actions/actions.js';
 
 
 function movies(state = [], action) {
     switch (action.type) {
-        case SET_MOVIES:
-            return action.value;
+        case SET_MOVIES: // Sets the movies and sorts by id by default
+                return [...action.value].sort((a, b) => {
+                    if (a._id.toUpperCase() < b._id.toUpperCase()) {
+                        return -1;
+                    } if (a._id.toUpperCase() > b._id.toUpperCase()) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                });
         case SORT_AZ:
-            return [...state];
+            return [...state].sort((a, b) => {
+                if (a.Title.toUpperCase() < b.Title.toUpperCase()) {
+                    return -1;
+                } if (a.Title.toUpperCase() > b.Title.toUpperCase()) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
         case SORT_ZA:
-                return [...state];
+            return [...state].sort((a, b) => {
+                if (a.Title.toUpperCase() > b.Title.toUpperCase()) {
+                    return -1;
+                } if (a.Title.toUpperCase() < b.Title.toUpperCase()) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
         case SORT_DIRECTOR:
-                return [...state];
+            return [...state].sort((a, b) => {
+                if (a.Director.Name.toUpperCase() < b.Director.Name.toUpperCase()) {
+                    return -1;
+                } if (a.Director.Name.toUpperCase() > b.Director.Name.toUpperCase()) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
         case SORT_GENRE:
-                return [...state];
-        default:
-            return state;
-    }
-}
-
-function sortColumn(state = 'title', action) {
-    switch (action.type) {
-        case SET_SORT_COLUMN:
-            return action.value;
+            return [...state].sort((a, b) => {
+                if (a.Genre.Name.toUpperCase() < b.Genre.Name.toUpperCase()) {
+                    return -1;
+                } if (a.Genre.Name.toUpperCase() > b.Genre.Name.toUpperCase()) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
+        case SORT_ID:
+            return [...state].sort((a, b) => {
+                if (a._id.toUpperCase() < b._id.toUpperCase()) {
+                    return -1;
+                } if (a._id.toUpperCase() > b._id.toUpperCase()) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
         default:
             return state;
     }
@@ -58,7 +99,6 @@ function searchValue(state = '', action) {
 
 
 const moviesApp = combineReducers({
-    sortColumn,
     movies,
     user,
     searchBarVisible,

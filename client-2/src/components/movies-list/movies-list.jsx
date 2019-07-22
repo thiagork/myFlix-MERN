@@ -5,7 +5,7 @@ import MovieCard from '../movie-card/movie-card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Alert from 'react-bootstrap/Alert'
+import Alert from 'react-bootstrap/Alert';
 
 
 function MoviesList(props) {
@@ -26,14 +26,17 @@ function MoviesList(props) {
         }
     }
 
-    if (!props.movies) return <div className='main-view' />;
+    if (!props.movies) {
+        return <div className='main-view' />
+    } else {
+        return <Container className='movies-list'>
+            {moviesToShow()[0] || !props.searchValue ? 
+                <Row>{moviesToShow().map(movie => <Col xl={3} sm={6} md={4} xs={12}> <MovieCard key={movie._id} movie={movie} /></Col>)}</Row> :
+                <Row><Col><Alert variant='danger'>Your search returned no results.</Alert></Col></Row>
+            }
+        </Container>
+    }
 
-    return <Container className='movies-list'>
-        {moviesToShow()[0] ?
-            <Row>{moviesToShow().map(movie => <Col xl={3} sm={6} md={4} xs={12}> <MovieCard key={movie._id} movie={movie} /></Col>)}</Row> :
-            <Row><Col><Alert variant='danger'>Your search returned no results.</Alert></Col></Row>
-        }
-    </Container>
 }
 
 

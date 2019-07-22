@@ -1,9 +1,9 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import React from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
-import { setUser, getMovies, makeSearch } from '../../actions/actions.js';
+import { setUser, getMovies } from '../../actions/actions.js';
+import NavBar from '../nav-bar/nav-bar';
 import MoviesList from '../movies-list/movies-list';
 import LoginView from '../login-view/login-view';
 import MovieView from '../movie-view/movie-view';
@@ -11,25 +11,13 @@ import { RegistrationView } from '../registration-view/registration-view';
 import GenreView from '../genre-view/genre-view';
 import DirectorView from '../director-view/director-view';
 import ProfileView from '../profile-view/profile-view';
-import { Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import Form from 'react-bootstrap/Form';
 import './main-view.scss';
 
 
 export class MainView extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            searchInput: ''
-        };
-    }
-
     componentDidMount() {
         console.log('component did mount...');
         const accessToken = localStorage.getItem('token');
@@ -41,7 +29,7 @@ export class MainView extends React.Component {
 
 
     render() {
-        const { user, searchBarVisible } = this.props;
+        const { user } = this.props;
         if (!user) {
             return (
                 <Router>
@@ -57,17 +45,7 @@ export class MainView extends React.Component {
         } else {
             return (
                 <Router>
-                    <Navbar sticky='top' bg='dark' variant='dark'>
-                        <Nav className='nav-bar'>
-                            <Link className='nav-link' to='/' onClick={() => {this.props.makeSearch(''); this.setState({searchInput: ''})}} >Home</Link> 
-                            <Link className='nav-link' to='/profile'>Profile</Link>
-                            {
-                                searchBarVisible ?
-                                <Form onSubmit={(e) => {e.preventDefault(); this.props.makeSearch(this.state.searchInput)}} ><Form.Control className='search-bar' value={this.state.searchInput} onChange={(e) => this.setState({searchInput: e.target.value})} /></Form> // Form required because <input> doesn't work with onSubmit
-                                : null
-                            }
-                        </Nav>
-                    </Navbar>
+                    <NavBar />
                     <Container className='main-view' fluid='true'>
                         <Row>
                             <Route exact path='/' render={() => <MoviesList />} />
@@ -85,13 +63,16 @@ export class MainView extends React.Component {
 
 
 const mapStateToProps = state => {
-    const { user, movies, searchBarVisible } = state;
+    const { user, movies } = state;
     return {
         user: user,
-        movies: movies,
-        searchBarVisible: searchBarVisible
+        movies: movies
     };
 }
 
+const mapDispatchToProps = {
+    setUser, getMovies
+}
 
-export default connect(mapStateToProps, { setUser, getMovies, makeSearch })(MainView);
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainView);

@@ -5,6 +5,7 @@ export const SORT_AZ = 'SORT_AZ';
 export const SORT_ZA = 'SORT_ZA';
 export const SORT_DIRECTOR = 'SORT_DIRECTOR';
 export const SORT_GENRE = 'SORT_GENRE';
+export const SORT_ID = 'SORT_ID';
 export const SET_USER = 'SET_USER';
 export const SET_FILTER = 'SET_FILTER';
 export const SET_SORT_COLUMN = 'SET_SORT_COLUMN';
@@ -31,6 +32,10 @@ export const sortDirector = () => {
 
 export const sortGenre = () => {
     return { type: SORT_GENRE };
+}
+
+export const sortId = () => {
+    return { type: SORT_ID };
 }
 
 export const setUser = (value) => {
