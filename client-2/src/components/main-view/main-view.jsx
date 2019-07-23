@@ -19,7 +19,6 @@ import './main-view.scss';
 
 export class MainView extends React.Component {
     componentDidMount() {
-        console.log('component did mount...');
         const accessToken = localStorage.getItem('token');
         if (accessToken !== null) {
             this.props.setUser(JSON.parse(localStorage.user));
