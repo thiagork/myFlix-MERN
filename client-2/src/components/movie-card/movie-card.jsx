@@ -10,7 +10,7 @@ export class MovieCard extends React.Component {
     render() {
         const { movie } = this.props;
         return (
-            <Link to={`/movies/${movie._id}`} style={{ 'color': 'black', 'text-decoration': 'none' }}>
+            <Link to={`/movies/${movie._id}`} style={{ 'color': 'black', 'textDecoration': 'none' }}>
                 <Card variant='link'>
                     <Card.Img variant='top' src={movie.ImagePath} />
                     <Card.Body>

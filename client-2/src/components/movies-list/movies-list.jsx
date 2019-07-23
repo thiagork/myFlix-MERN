@@ -9,6 +9,7 @@ import Alert from 'react-bootstrap/Alert';
 
 
 function MoviesList(props) {
+    const { searchValue, movies } = props;
 
     useEffect(() => {
         props.searchBarVisible(true);
@@ -18,20 +19,20 @@ function MoviesList(props) {
         }
     });
 
-    const moviesToShow = (movies = props.movies, searchValue = props.searchValue) => {
-        if (searchValue.length > 1) {
-            return movies.filter(movie => (movie.Title.toLowerCase().indexOf(searchValue.toLocaleLowerCase()) > -1) || (movie.Genre.Name.toLowerCase().indexOf(searchValue.toLocaleLowerCase()) > -1) || (movie.Director.Name.toLowerCase().indexOf(searchValue.toLocaleLowerCase()) > -1))
+    const moviesToShow = () => {
+        if (searchValue.length > 0) {
+            return movies.filter(movie => (movie.Title.toLowerCase().includes(searchValue.toLocaleLowerCase())) || (movie.Genre.Name.toLowerCase().includes(searchValue.toLocaleLowerCase())) || (movie.Director.Name.toLowerCase().includes(searchValue.toLocaleLowerCase())))
         } else {
             return movies;
         }
     }
 
-    if (!props.movies) {
+    if (!movies) {
         return <div className='main-view' />
     } else {
         return <Container className='movies-list'>
-            {moviesToShow()[0] || !props.searchValue ? 
-                <Row>{moviesToShow().map(movie => <Col xl={3} sm={6} md={4} xs={12}> <MovieCard key={movie._id} movie={movie} /></Col>)}</Row> :
+            {moviesToShow()[0] || !searchValue ?
+                <Row>{moviesToShow().map(movie => <Col key={movie._id} xl={3} sm={6} md={4} xs={12}> <MovieCard movie={movie} /></Col>)}</Row> :
                 <Row><Col><Alert variant='danger'>Your search returned no results.</Alert></Col></Row>
             }
         </Container>
