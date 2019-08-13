@@ -17,7 +17,7 @@ import Col from "react-bootstrap/Col";
 import "./main-view.scss";
 
 export function MainView(props) {
-  const { user } = this.props;
+  const { user } = props;
 
   useEffect(() => {
     const accessToken = localStorage.getItem("token");
@@ -25,7 +25,7 @@ export function MainView(props) {
       props.setUser(JSON.parse(localStorage.user));
       props.getMovies(accessToken);
     }
-  }, [props]);
+  }, []);
 
   if (!user) {
     return (
@@ -73,10 +73,9 @@ export function MainView(props) {
 }
 
 const mapStateToProps = state => {
-  const { user, movies } = state;
+  const { user } = state;
   return {
-    user: user,
-    movies: movies
+    user: user
   };
 };
 
