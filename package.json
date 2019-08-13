@@ -4,7 +4,9 @@
   "description": "A web application that will provide users with access to information about different movies, directors, and genres.  Users will be able to sign up, update their personal information, and create a list of their favorite movies.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "repository": {
     "type": "git",
@@ -16,7 +18,7 @@
   "bugs": {
     "url": "https://github.com/thiagork/myFlix-MERN/issues"
   },
-  "homepage": "https://github.com/thiagork/myFlix-MERN#readme",
+  "homepage": "https://github.com/thiagork/myFlix-MERN",
   "dependencies": {
     "axios": "^0.19.0",
     "bcrypt": "^3.0.5",
@@ -42,6 +44,7 @@
     "babel-preset-react": "^6.24.1",
     "eslint": "^5.16.0",
     "eslint-plugin-react": "^7.12.4",
+    "gh-pages": "^2.1.1",
     "sass": "^1.18.0"
   }
 }
