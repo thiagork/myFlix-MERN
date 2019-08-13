@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/myFlix-MERN/static/css/main.a5621dfb.chunk.css",
+    "main.js": "/myFlix-MERN/static/js/main.539704b3.chunk.js",
+    "main.js.map": "/myFlix-MERN/static/js/main.539704b3.chunk.js.map",
+    "runtime~main.js": "/myFlix-MERN/static/js/runtime~main.03fa0557.js",
+    "runtime~main.js.map": "/myFlix-MERN/static/js/runtime~main.03fa0557.js.map",
+    "static/css/2.22a7d4ef.chunk.css": "/myFlix-MERN/static/css/2.22a7d4ef.chunk.css",
+    "static/js/2.b5954473.chunk.js": "/myFlix-MERN/static/js/2.b5954473.chunk.js",
+    "static/js/2.b5954473.chunk.js.map": "/myFlix-MERN/static/js/2.b5954473.chunk.js.map",
+    "index.html": "/myFlix-MERN/index.html",
+    "precache-manifest.03c55fe976f9eeffb1ebaf039280c0d9.js": "/myFlix-MERN/precache-manifest.03c55fe976f9eeffb1ebaf039280c0d9.js",
+    "service-worker.js": "/myFlix-MERN/service-worker.js",
+    "static/css/2.22a7d4ef.chunk.css.map": "/myFlix-MERN/static/css/2.22a7d4ef.chunk.css.map",
+    "static/css/main.a5621dfb.chunk.css.map": "/myFlix-MERN/static/css/main.a5621dfb.chunk.css.map"
+  }
+}
