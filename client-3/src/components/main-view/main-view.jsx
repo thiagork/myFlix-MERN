@@ -17,15 +17,15 @@ import Col from "react-bootstrap/Col";
 import "./main-view.scss";
 
 export function MainView(props) {
-  const { user } = props;
+  const { user, setUser: dispatchSetUser, getMovies: dispatchGetMovies } = props;
 
   useEffect(() => {
     const accessToken = localStorage.getItem("token");
     if (accessToken !== null) {
-      props.setUser(JSON.parse(localStorage.user));
-      props.getMovies(accessToken);
+      dispatchSetUser(JSON.parse(localStorage.user));
+      dispatchGetMovies(accessToken);
     }
-  }, []);
+  }, [dispatchSetUser, dispatchGetMovies]);
 
   if (!user) {
     return (

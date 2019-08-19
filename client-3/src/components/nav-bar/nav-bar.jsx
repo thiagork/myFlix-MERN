@@ -80,7 +80,7 @@ function NavBar(props) {
   if (props.searchBarVisible) {
     return (
       <AppBar position="static">
-        <Toolbar class="navbar">
+        <Toolbar className="navbar">
           <Link
             component={RouterLink}
             to="/"
@@ -131,7 +131,7 @@ function NavBar(props) {
           <IconButton
             id="log-out"
             variant="secondary"
-            size="sm"
+            size="small"
             onClick={() => {
               props.setUser("");
               props.setMovies([]);
@@ -146,7 +146,7 @@ function NavBar(props) {
   } else {
     return (
       <AppBar position="static">
-        <Toolbar class="navbar">
+        <Toolbar className="navbar">
           <Link
             component={RouterLink}
             to="/"
