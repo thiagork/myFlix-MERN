@@ -1,0 +1,17 @@
+.navbar {
+    display: flex;
+    background-color: #343a40;
+    justify-content: flex-start;
+}
+
+.navbar a {
+    margin-left: 5px;
+    color: rgba(255, 255, 255, 0.5);
+}
+.search-and-sort {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    z-index: 999;
+}
+

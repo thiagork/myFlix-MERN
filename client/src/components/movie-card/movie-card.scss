@@ -15,3 +15,11 @@ $lines-to-show: 3;
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.is-favorite {
+    color: gold;
+}
+
+.is-not-favorite {
+    color: #ccc;
+}

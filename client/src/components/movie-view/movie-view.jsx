@@ -1,58 +1,53 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import React from 'react';
-import PropTypes from 'prop-types';
-import { MainView } from '../main-view/main-view';
-import Button from 'react-bootstrap/Button';
+import { connect } from 'react-redux';
+import { addMovieToFavorites, removeMovieFromFavorites } from '../../actions/actions.js';
 import './movie-view.scss';
+import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 
-export class MovieView extends React.Component {
-    constructor(props) {
-        super(props);
 
-        this.state = {};
-    }
+function MovieView(props) {
 
-    render() {
+    const { movies, movieId } = props;
+    if (!movies || !movies.length) return null;
+    const movie = movies.find(movie => movie._id == movieId);
 
-        if (!this.props.movie) return null;
-
-        return (
-            <div className='movie-view'>
-                <div className='movie-title'>
-                    <h2 className='label'>Title</h2>
-                    <p className='value'>{this.props.movie.Title}</p>
-                </div>
-                <div className='movie-description'>
-                    <h3 className='label'>Description</h3>
-                    <p className='value'>{this.props.movie.Description}</p>
-                </div>
-                <div className='movie-genre'>
-                    <h3 className='label'>Genre</h3>
-                    <p className='value'>{this.props.movie.Genre.Name}</p>
-                </div>
-                <div className='movie-director'>
-                    <h3 className='label'>Director</h3>
-                    <p className='value'>{this.props.movie.Director.Name}</p>
-                </div>
-                <div className='return-button'>
-                    <Button variant='primary' onClick={() => this.props.returnCallback()}>Return</Button>
-                </div>
+    return (
+        <div className='movie-view'>
+            <div className='movie-title'>
+                <h2 className='label'>Title</h2>
+                <p className='value'>{movie.Title}
+                    {
+                        props.user.FavoriteMovies.indexOf(movie._id) > -1 ?
+                            <Button variant='danger' onClick={() => props.removeMovieFromFavorites(movieId)}>Remove from favorite</Button> :
+                            <Button variant='primary' onClick={() => props.addMovieToFavorites(movieId)}>Add to favorite</Button>
+                    }
+                </p>
             </div>
-        );
-    }
+            <div className='movie-description'>
+                <h3 className='label'>Description</h3>
+                <p className='value'>{movie.Description}</p>
+            </div>
+            <div className='movie-genre'>
+                <h3 className='label'>Genre</h3>
+                <p className='value'><Link to={`/genre/${movie.Genre.Name}`}>{movie.Genre.Name}</Link></p>
+            </div>
+            <div className='movie-director'>
+                <h3 className='label'>Director</h3>
+                <p className='value'><Link to={`/director/${movie.Director.Name}`}>{movie.Director.Name}</Link></p>
+            </div>
+        </div>
+    );
 }
 
-MovieView.propTypes = {
-    movie: PropTypes.shape({
-        Title: PropTypes.string,
-        Description: PropTypes.string,
-        Genre: PropTypes.shape({
-            Name: PropTypes.string
-        }),
-        Director: PropTypes.shape({
-            Name: PropTypes.string
-        })
-    }).isRequired,
-    onClick: PropTypes.func.isRequired
+const mapStateToProps = state => {
+    const { user, movies } = state;
+    return {
+        user: user,
+        movies: movies
+    };
 }
+
+export default connect(mapStateToProps, { addMovieToFavorites, removeMovieFromFavorites })(MovieView);
