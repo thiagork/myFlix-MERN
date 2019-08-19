@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "./static/css/main.a5621dfb.chunk.css",
-    "main.js": "./static/js/main.6412d1af.chunk.js",
-    "main.js.map": "./static/js/main.6412d1af.chunk.js.map",
-    "runtime~main.js": "./static/js/runtime~main.d653cc00.js",
-    "runtime~main.js.map": "./static/js/runtime~main.d653cc00.js.map",
-    "static/css/2.22a7d4ef.chunk.css": "./static/css/2.22a7d4ef.chunk.css",
-    "static/js/2.b5954473.chunk.js": "./static/js/2.b5954473.chunk.js",
-    "static/js/2.b5954473.chunk.js.map": "./static/js/2.b5954473.chunk.js.map",
-    "index.html": "./index.html",
-    "precache-manifest.f28181bcb875414184214a95448ac18e.js": "./precache-manifest.f28181bcb875414184214a95448ac18e.js",
-    "service-worker.js": "./service-worker.js",
-    "static/css/2.22a7d4ef.chunk.css.map": "./static/css/2.22a7d4ef.chunk.css.map",
-    "static/css/main.a5621dfb.chunk.css.map": "./static/css/main.a5621dfb.chunk.css.map"
+    "main.css": "/myFlix-MERN/static/css/main.b8a91b22.chunk.css",
+    "main.js": "/myFlix-MERN/static/js/main.7e9079d1.chunk.js",
+    "main.js.map": "/myFlix-MERN/static/js/main.7e9079d1.chunk.js.map",
+    "runtime~main.js": "/myFlix-MERN/static/js/runtime~main.03fa0557.js",
+    "runtime~main.js.map": "/myFlix-MERN/static/js/runtime~main.03fa0557.js.map",
+    "static/css/2.22a7d4ef.chunk.css": "/myFlix-MERN/static/css/2.22a7d4ef.chunk.css",
+    "static/js/2.d42a9737.chunk.js": "/myFlix-MERN/static/js/2.d42a9737.chunk.js",
+    "static/js/2.d42a9737.chunk.js.map": "/myFlix-MERN/static/js/2.d42a9737.chunk.js.map",
+    "index.html": "/myFlix-MERN/index.html",
+    "precache-manifest.fa69e5ccd3965c08faeb07c3e9aac51a.js": "/myFlix-MERN/precache-manifest.fa69e5ccd3965c08faeb07c3e9aac51a.js",
+    "service-worker.js": "/myFlix-MERN/service-worker.js",
+    "static/css/2.22a7d4ef.chunk.css.map": "/myFlix-MERN/static/css/2.22a7d4ef.chunk.css.map",
+    "static/css/main.b8a91b22.chunk.css.map": "/myFlix-MERN/static/css/main.b8a91b22.chunk.css.map"
   }
 }
