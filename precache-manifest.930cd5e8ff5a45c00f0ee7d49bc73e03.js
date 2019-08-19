@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "97990fc1cf3e70a3cbdb7635dc18a70d",
+    "revision": "618b2b6bbfbd3c6bed8b91a130ece3e0",
     "url": "/myFlix-MERN/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/myFlix-MERN/static/css/2.22a7d4ef.chunk.css"
   },
   {
-    "revision": "ac3bca4b8674ecf8999a",
+    "revision": "e569eecb27fc590705da",
     "url": "/myFlix-MERN/static/css/main.b8a91b22.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/myFlix-MERN/static/js/2.d42a9737.chunk.js"
   },
   {
-    "revision": "ac3bca4b8674ecf8999a",
-    "url": "/myFlix-MERN/static/js/main.7e9079d1.chunk.js"
+    "revision": "e569eecb27fc590705da",
+    "url": "/myFlix-MERN/static/js/main.9037e576.chunk.js"
   },
   {
     "revision": "cbd5dbac8bba1f0143b3",

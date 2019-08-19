@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/myFlix-MERN/static/css/main.b8a91b22.chunk.css",
-    "main.js": "/myFlix-MERN/static/js/main.7e9079d1.chunk.js",
-    "main.js.map": "/myFlix-MERN/static/js/main.7e9079d1.chunk.js.map",
+    "main.js": "/myFlix-MERN/static/js/main.9037e576.chunk.js",
+    "main.js.map": "/myFlix-MERN/static/js/main.9037e576.chunk.js.map",
     "runtime~main.js": "/myFlix-MERN/static/js/runtime~main.03fa0557.js",
     "runtime~main.js.map": "/myFlix-MERN/static/js/runtime~main.03fa0557.js.map",
     "static/css/2.22a7d4ef.chunk.css": "/myFlix-MERN/static/css/2.22a7d4ef.chunk.css",
     "static/js/2.d42a9737.chunk.js": "/myFlix-MERN/static/js/2.d42a9737.chunk.js",
     "static/js/2.d42a9737.chunk.js.map": "/myFlix-MERN/static/js/2.d42a9737.chunk.js.map",
     "index.html": "/myFlix-MERN/index.html",
-    "precache-manifest.fa69e5ccd3965c08faeb07c3e9aac51a.js": "/myFlix-MERN/precache-manifest.fa69e5ccd3965c08faeb07c3e9aac51a.js",
+    "precache-manifest.930cd5e8ff5a45c00f0ee7d49bc73e03.js": "/myFlix-MERN/precache-manifest.930cd5e8ff5a45c00f0ee7d49bc73e03.js",
     "service-worker.js": "/myFlix-MERN/service-worker.js",
     "static/css/2.22a7d4ef.chunk.css.map": "/myFlix-MERN/static/css/2.22a7d4ef.chunk.css.map",
     "static/css/main.b8a91b22.chunk.css.map": "/myFlix-MERN/static/css/main.b8a91b22.chunk.css.map"

@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.0/workbox-sw.js");
 
 importScripts(
-  "/myFlix-MERN/precache-manifest.fa69e5ccd3965c08faeb07c3e9aac51a.js"
+  "/myFlix-MERN/precache-manifest.930cd5e8ff5a45c00f0ee7d49bc73e03.js"
 );
 
 self.addEventListener('message', (event) => {
